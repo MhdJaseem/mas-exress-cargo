@@ -17,6 +17,27 @@ This is a **single-page app**: every URL (`/air-freight`, `/about`, …) must se
 
 Cloudflare Pages · Netlify · Vercel (all free tiers suit this site; global CDN + HTTPS automatic). A UAE VPS with Nginx also works.
 
+## Steps (Vercel)
+
+`vercel.json` holds everything Vercel needs; no dashboard overrides required.
+
+| Setting          | Value in `vercel.json`                                                                                                                         |
+| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework        | `vite` · install `npm ci` · build `npm run build` · output `dist`                                                                              |
+| Node             | from `package.json` `engines` (20.19+ / 22.x)                                                                                                  |
+| SPA fallback     | every path except `/assets/*`, `/img/*`, `/video/*` → `/index.html` (a missing image is a real 404, not the app)                               |
+| Redirects        | old `.html` URLs → clean URLs (308 permanent); `trailingSlash: false` (`/about/` → `/about`)                                                   |
+| Cache            | `/assets/*` 1 year immutable (hashed) · `/img/*`, `/video/*` 1 day + 7 days stale-while-revalidate · HTML: Vercel default (always revalidated) |
+| Security headers | `nosniff`, `Referrer-Policy`, `X-Frame-Options: SAMEORIGIN`, `Permissions-Policy`, HSTS                                                        |
+
+1. Push the repo to GitHub (Vercel deploys `main` to production and every PR / branch to a preview URL).
+2. vercel.com → Add New → Project → import the repo. Root directory: the folder containing `package.json` (`mas-vite` if the repo root is one level up). Leave build settings on defaults — `vercel.json` sets them.
+3. Settings → Environment Variables: `VITE_API_BASE` for Production and Preview (leave empty until the backend exists — the forms fall back to email drafts). `VITE_*` vars are baked in at build time, so redeploy after changing one.
+4. Settings → Domains: add `masexpresscargo.com` and `www.masexpresscargo.com`, set www as primary (apex redirects to it), then point DNS as Vercel shows (A `76.76.21.21` for apex, CNAME `cname.vercel-dns.com` for www). HTTPS is automatic.
+5. Check the preview URL against TESTING_QA.md before switching DNS; keep the old site live until then.
+
+Not set yet: a Content-Security-Policy (add once the API domain is known — it must allow `connect-src` to `VITE_API_BASE`, Google Fonts in `style-src`/`font-src`). Unknown URLs render the app's 404 page but return HTTP 200 (normal for an SPA; pre-rendering, 5.4, fixes it).
+
 ## Steps (Cloudflare Pages / Netlify style)
 
 1. Push the repo to GitHub.

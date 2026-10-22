@@ -1,71 +1,41 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "vite",
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "trailingSlash": false,
   "redirects": [
-    {
-      "source": "/index.html",
-      "destination": "/",
-      "permanent": true
-    },
-    {
-      "source": "/air-freight.html",
-      "destination": "/air-freight",
-      "permanent": true
-    },
-    {
-      "source": "/sea-freight.html",
-      "destination": "/sea-freight",
-      "permanent": true
-    },
-    {
-      "source": "/gcc-road-transport.html",
-      "destination": "/gcc-road-transport",
-      "permanent": true
-    },
-    {
-      "source": "/warehousing.html",
-      "destination": "/warehousing",
-      "permanent": true
-    },
-    {
-      "source": "/customs-clearance.html",
-      "destination": "/customs-clearance",
-      "permanent": true
-    },
-    {
-      "source": "/about.html",
-      "destination": "/about",
-      "permanent": true
-    },
-    {
-      "source": "/our-team.html",
-      "destination": "/our-team",
-      "permanent": true
-    },
-    {
-      "source": "/our-branches.html",
-      "destination": "/our-branches",
-      "permanent": true
-    },
-    {
-      "source": "/careers.html",
-      "destination": "/careers",
-      "permanent": true
-    }
+    { "source": "/index.html", "destination": "/", "permanent": true },
+    { "source": "/air-freight.html", "destination": "/air-freight", "permanent": true },
+    { "source": "/sea-freight.html", "destination": "/sea-freight", "permanent": true },
+    { "source": "/gcc-road-transport.html", "destination": "/gcc-road-transport", "permanent": true },
+    { "source": "/warehousing.html", "destination": "/warehousing", "permanent": true },
+    { "source": "/customs-clearance.html", "destination": "/customs-clearance", "permanent": true },
+    { "source": "/about.html", "destination": "/about", "permanent": true },
+    { "source": "/our-team.html", "destination": "/our-team", "permanent": true },
+    { "source": "/our-branches.html", "destination": "/our-branches", "permanent": true },
+    { "source": "/careers.html", "destination": "/careers", "permanent": true }
   ],
-  "rewrites": [
-    {
-      "source": "/(.*)",
-      "destination": "/index.html"
-    }
-  ],
+  "rewrites": [{ "source": "/((?!assets/|img/|video/).*)", "destination": "/index.html" }],
   "headers": [
     {
-      "source": "/assets/(.*)",
+      "source": "/(.*)",
       "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=31536000, immutable"
-        }
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=(), interest-cohort=()" },
+        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains; preload" }
       ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(img|video)/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }]
     }
   ]
 }
