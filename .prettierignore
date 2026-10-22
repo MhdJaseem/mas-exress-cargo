@@ -1,0 +1,6 @@
+node_modules
+dist
+public
+package-lock.json
+# stylesheets are kept compact (one rule per line) on purpose
+src/styles

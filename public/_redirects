@@ -1,0 +1,15 @@
+# Netlify / Cloudflare Pages
+# Old multi-page addresses -> clean URLs (permanent, keeps SEO)
+/index.html               /                     301
+/air-freight.html         /air-freight          301
+/sea-freight.html         /sea-freight          301
+/gcc-road-transport.html  /gcc-road-transport   301
+/warehousing.html         /warehousing          301
+/customs-clearance.html   /customs-clearance    301
+/about.html               /about                301
+/our-team.html            /our-team             301
+/our-branches.html        /our-branches         301
+/careers.html             /careers              301
+
+# Single-page app: every other path is handled by React Router
+/*                        /index.html           200
