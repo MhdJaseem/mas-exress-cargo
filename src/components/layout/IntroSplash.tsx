@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { ContainerShip, Jet } from './IntroVehicles';
+import { IntroBackdrop } from './IntroBackdrop';
 
 const KEY = 'mas-intro-seen';
 const TOTAL_MS = 9400; // keep in sync with the .intro fade-out in main.css (8.8s delay + 0.6s)
@@ -52,6 +53,7 @@ export function IntroSplash() {
 
   return (
     <div className="intro" onClick={() => setShow(false)}>
+      <IntroBackdrop />
       <div className="intro-logo" role="img" aria-label="MAS Express Cargo L.L.C">
         <img className="iw iw-l" src="/img/brand/logo-wing-left.png" alt="" />
         <div className="intro-text">

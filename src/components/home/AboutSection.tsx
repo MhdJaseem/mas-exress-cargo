@@ -2,19 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router';
 import { Icon } from '../ui/Icon';
 import { CountUp } from '../ui/CountUp';
-
-const Wave = () => (
-  <svg
-    viewBox="0 0 200 60"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    aria-hidden="true"
-  >
-    <path d="M0 44 C20 10 40 10 60 30 S100 54 120 28 S170 6 200 24" />
-  </svg>
-);
+import { GrowthChart } from '../ui/GrowthChart';
 
 /** About teaser with the crane video (plays only while visible) and two stats. */
 export function AboutSection() {
@@ -61,7 +49,7 @@ export function AboutSection() {
                 <sup>+</sup>
               </b>
               <span>Daily Shipment</span>
-              <Wave />
+              <GrowthChart />
             </div>
             <div className="stat b">
               <b>
@@ -69,7 +57,7 @@ export function AboutSection() {
                 <sup>%</sup>
               </b>
               <span>On-Time Delivery</span>
-              <Wave />
+              <GrowthChart />
             </div>
           </div>
         </div>

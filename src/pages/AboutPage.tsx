@@ -3,6 +3,7 @@ import { PageHero } from '../components/ui/PageHero';
 import { SectionHead } from '../components/ui/Heading';
 import { Icon, type IconName } from '../components/ui/Icon';
 import { CountUp } from '../components/ui/CountUp';
+import { GrowthChart } from '../components/ui/GrowthChart';
 import { TestimonialsSplit } from '../components/ui/TestimonialsSplit';
 import { JourneyMap } from '../components/about/JourneyMap';
 import { clients } from '../data/company';
@@ -44,20 +45,6 @@ const VMV: { icon: IconName; title: string; text: string }[] = [
   },
 ];
 
-/** Little wave drawn behind the stat numbers (same as the home About stats). */
-const Wave = () => (
-  <svg
-    viewBox="0 0 200 60"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2.2"
-    strokeLinecap="round"
-    aria-hidden="true"
-  >
-    <path d="M0 44 C20 10 40 10 60 30 S100 54 120 28 S170 6 200 24" />
-  </svg>
-);
-
 export default function AboutPage() {
   useDocumentMeta(
     pageTitle('About Us'),
@@ -87,7 +74,7 @@ export default function AboutPage() {
                   <sup>+</sup>
                 </b>
                 <span>Daily Shipment</span>
-                <Wave />
+                <GrowthChart />
               </div>
               <div className="stat b jr-stat s2">
                 <b>
@@ -95,7 +82,7 @@ export default function AboutPage() {
                   <sup>%</sup>
                 </b>
                 <span>On-Time Delivery</span>
-                <Wave />
+                <GrowthChart />
               </div>
             </div>
             <div className="jr-copy">
