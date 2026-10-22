@@ -182,7 +182,7 @@ export const branches: Branch[] = [
     main: true,
     address: 'MAS Express Cargo LLC, Warehouse No 08, Industrial Area 17, Sharjah, UAE',
     rows: [
-      { label: 'Office', text: '04 285 9004', href: 'tel:042859004' },
+      { label: 'Office', text: '050 644 4786', href: 'tel:+971506444786' },
       { label: 'Toll Free', text: '+971 800 4786', href: 'tel:+9718004786' },
       { label: 'Email', text: 'info@masexpresscargo.com', href: 'mailto:info@masexpresscargo.com' },
       hours('Sun–Thu 8 AM–8 PM | Fri 9 AM–6 PM | Sat 9 AM–5 PM'),

@@ -4,7 +4,7 @@ Source of truth for wording: the original site https://www.masexpresscargo.com. 
 
 ## Contact data (appears in header cards, footer, contact section, WhatsApp)
 
-- Phone (06) 566 0886 · Toll-free +971 800 4786 (shown as "Call Us Anytime")
+- Phone 050 944 4786 (changed from (06) 566 0886 at the client's request, 2026-10-22) · Toll-free +971 800 4786 (shown as "Call Us Anytime")
 - Email masexpresscargodubai@gmail.com · sales@masexpress.in
 - Address: MAS Express Cargo. Warehouse number - 08 , Industrial area - 17, Near - Diana Trade , Sharjah UAE.
 - WhatsApp: +971 50 644 4786 (wa.me/971506444786) · +971 52 166 8786 (wa.me/971521668786)
@@ -43,7 +43,7 @@ The 20 countries/regions MAS ships to, as given by the client (2026-10-21): UK, 
 
 ## Contact data that differs on the ORIGINAL branches page (kept as-is — ask the client)
 
-- Head office phone is "04 285 9004" there, but "(06) 566 0886" in the site header/footer.
+- Phones updated by the client on 2026-10-22: head office "Office" is now 050 644 4786 (was 04 285 9004); the contact strip / footer number is now 050 944 4786 (was (06) 566 0886).
 - Head office email is "info@masexpresscargo.com" there, but the site elsewhere uses masexpresscargodubai@gmail.com and sales@masexpress.in.
 
 ## Known typo in the ORIGINAL sea-freight page (kept as-is — ask the client)

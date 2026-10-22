@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { Footer } from './Footer';
 import { WhatsAppWidget } from './WhatsAppWidget';
 import { ScrollManager } from './ScrollManager';
+import { IntroSplash } from './IntroSplash';
 
 /**
  * Shared page shell for every route: icon sprite, skip link, the framed white "shell"
@@ -32,6 +33,7 @@ export default function RootLayout() {
       </div>
       <WhatsAppWidget />
       <ScrollManager />
+      <IntroSplash />
     </>
   );
 }

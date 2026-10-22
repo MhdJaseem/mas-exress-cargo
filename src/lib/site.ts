@@ -5,7 +5,7 @@
 export const SITE_NAME = 'MAS Express Cargo L.L.C';
 
 export const CONTACT = {
-  phone: { label: '(06) 566 0886', href: 'tel:+97165660886' },
+  phone: { label: '050 944 4786', href: 'tel:+971509444786' },
   tollFree: { label: '+971 800 4786', href: 'tel:+9718004786' },
   emails: ['masexpresscargodubai@gmail.com', 'sales@masexpress.in'],
   address: 'MAS Express Cargo. Warehouse number - 08 , Industrial area - 17, Near - Diana Trade , Sharjah UAE.',
