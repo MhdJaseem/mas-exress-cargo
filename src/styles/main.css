@@ -564,7 +564,7 @@ html body .hero{padding-bottom:16px;min-height:min(calc(100vh - 16px),780px)}
 .hero-slides .ph{position:absolute;inset:0;background-size:cover;background-repeat:no-repeat;background-position:50% 50%;transform:scale(1.12);transition:transform 9s cubic-bezier(.2,.6,.2,1)}
 .hero-slides .slide.on .ph{transform:scale(1)}
 .hero-slides .slide[data-i="0"] .ph{background-position:100% 50%;transform-origin:80% 35%}
-.hero-slides .slide[data-i="2"] .ph{background-position:100% 50%;transform-origin:80% 60%}
+.hero-slides .slide[data-i="2"] .ph{background-position:46% 50%;transform-origin:50% 60%} /* very wide, short truck photo: centre the whole truck */
 .hero-slides .slide::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(3,14,26,.55),rgba(3,14,26,.12) 38%,rgba(3,14,26,.18))}
 .hero-slides .slide[data-i="0"]::after{background:linear-gradient(180deg,rgba(3,14,26,.5),rgba(3,14,26,.1) 38%,rgba(3,14,26,.16))}
 .hero-slides .sbrand{position:absolute;z-index:2;right:5%;top:24%;width:clamp(110px,13vw,190px);height:auto;opacity:0;transform:translateY(12px);filter:drop-shadow(0 4px 18px rgba(0,0,0,.45));transition:opacity 1s ease .9s,transform 1s var(--ease) .9s}
@@ -580,7 +580,7 @@ html body .hero{padding-bottom:16px;min-height:min(calc(100vh - 16px),780px)}
 .slidenav button.done i{width:100%}
 @keyframes slfill{to{width:100%}}
 .slidenav:focus-within button:focus-visible{outline:2px solid #fff;outline-offset:2px}
-@media (max-width:900px){.hero-slides .slide[data-i="1"] .ph{background-position:68% 50%}.hero-slides .slide[data-i="2"] .ph{background-position:88% 50%}.hero-slides .slide[data-i="0"] .ph{background-position:93% 50%}.hero-slides .sbrand{top:30%;right:7%}}
+@media (max-width:900px){.hero-slides .slide[data-i="1"] .ph{background-position:68% 50%}.hero-slides .slide[data-i="2"] .ph{background-position:35% 50%}.hero-slides .slide[data-i="0"] .ph{background-position:93% 50%}.hero-slides .sbrand{top:30%;right:7%}}
 
 /* ============ testimonials: copy left, endless upward comments right ============ */
 .tsplit{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,70px);align-items:center}
@@ -752,9 +752,14 @@ html.intro-lock{overflow:hidden}
 .ib-cloud.c2{top:24%;width:60vw;height:12vh;animation-duration:58s;animation-delay:-24s}
 .ib-cloud.c3{top:6%;width:36vw;animation-duration:50s;animation-delay:-38s}
 @keyframes cloud{to{transform:translateX(170vw)}}
-.ib-city{position:absolute;left:0;width:100%;bottom:calc(100% - var(--hz));height:min(22vh,180px);overflow:visible}
-.ib-city-far{fill:rgba(255,255,255,.03)}
-.ib-city-near{fill:rgba(255,255,255,.07)}
+.ib-city{position:absolute;left:0;width:100%;bottom:calc(100% - var(--hz));height:min(34vh,300px);overflow:visible}
+.ib-far{fill:rgba(255,255,255,.04)}
+.ib-mid{fill:rgba(255,255,255,.065)}
+.ib-lm{fill:rgba(255,255,255,.11)}
+.ib-core{fill:rgba(255,255,255,.14)}
+.ib-edge{fill:none;stroke:rgba(21,21,21,.5);stroke-width:1.2}
+.ib-beacon{fill:var(--brand);animation:beacon 1.4s steps(1) infinite}
+@keyframes beacon{0%,60%{opacity:1}61%,100%{opacity:.15}}
 .ib-light{fill:#fff;opacity:.2;animation:cityLight 3s ease-in-out infinite}
 @keyframes cityLight{0%,100%{opacity:.15}50%{opacity:.75}}
 .ib-sea{position:absolute;left:0;right:0;top:var(--hz);bottom:0;border-top:1px solid rgba(227,30,36,.5);box-shadow:0 0 22px rgba(227,30,36,.45);background:linear-gradient(180deg,rgba(181,20,26,.2),var(--ink) 75%)}

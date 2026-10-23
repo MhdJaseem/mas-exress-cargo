@@ -5,7 +5,7 @@ import { HashLink } from '../ui/HashLink';
 const SLIDES = [
   { img: '/img/hero/hero-air.jpg', label: 'Air Freight' },
   { img: '/img/hero/hero-sea.jpg', label: 'Sea Freight' },
-  { img: '/img/hero/hero-road.jpg', label: 'GCC Road Transport' },
+  { img: '/img/hero/hero-road-truck.webp', label: 'GCC Road Transport' },
 ];
 const DUR = 6500;
 
