@@ -12,6 +12,8 @@ export interface Card {
   text: string;
   /** Bullet list under the text (sea freight FCL / LCL / Specialized). */
   list?: string[];
+  /** Photo on top of the card in the carousel, /img/cards/<service>/<name>.webp (16:9). */
+  img?: string;
 }
 
 export type Block =
@@ -36,10 +38,16 @@ export interface Service {
 }
 
 /** Live lists are written "Title: text" — split into a card. */
-const card = (icon: IconName, s: string): Card => {
+const card = (icon: IconName, s: string, img?: string): Card => {
   const i = s.indexOf(':');
-  return { icon, title: s.slice(0, i).trim(), text: s.slice(i + 1).trim() };
+  return { icon, title: s.slice(0, i).trim(), text: s.slice(i + 1).trim(), img };
 };
+
+const AIR = '/img/cards/air-freight/';
+const SEA = '/img/cards/sea-freight/';
+const ROAD = '/img/cards/gcc-road-transport/';
+const WH = '/img/cards/warehousing/';
+const CUS = '/img/cards/customs-clearance/';
 
 export const services: Service[] = [
   {
@@ -66,12 +74,16 @@ export const services: Service[] = [
         heading: ['Benefits of ', 'MAS Express Air Freight'],
         cols: 3,
         cards: [
-          card('bolt', 'Speed: GCC delivery in 24–48 hours, global in 3–5 days'),
-          card('radar', 'Reliability: High on-time performance across GCC and global routes'),
-          card('pin', 'Tracking: Real-time MAS Express tracking from pickup to delivery'),
-          card('customs', 'Security: IATA certified handling and maximum insurance coverage'),
-          card('users', 'Expertise: 14+ years of GCC air cargo experience'),
-          card('globe', 'Flexibility: Solutions from small parcels to consolidated shipments'),
+          card('bolt', 'Speed: GCC delivery in 24–48 hours, global in 3–5 days', `${AIR}speed.webp`),
+          card('radar', 'Reliability: High on-time performance across GCC and global routes', `${AIR}reliability.webp`),
+          card('pin', 'Tracking: Real-time MAS Express tracking from pickup to delivery', `${AIR}tracking.webp`),
+          card('customs', 'Security: IATA certified handling and maximum insurance coverage', `${AIR}security.webp`),
+          card('users', 'Expertise: 14+ years of GCC air cargo experience', `${AIR}expertise.webp`),
+          card(
+            'globe',
+            'Flexibility: Solutions from small parcels to consolidated shipments',
+            `${AIR}flexibility.webp`,
+          ),
         ],
       },
       {
@@ -84,21 +96,25 @@ export const services: Service[] = [
             icon: 'plane',
             title: 'Express Air Freight',
             text: 'Priority handling and boarding for urgent shipments with guaranteed space on the next available flight.',
+            img: `${AIR}express.webp`,
           },
           {
             icon: 'bolt',
             title: 'Temperature-Controlled',
             text: 'Specialized handling for pharmaceuticals, perishables, and temperature-sensitive products.',
+            img: `${AIR}temperature-controlled.webp`,
           },
           {
             icon: 'tag',
             title: 'High Value Cargo',
             text: 'Secure transport for electronics, jewelry, artworks, and other high-value items with enhanced insurance.',
+            img: `${AIR}high-value.webp`,
           },
           {
             icon: 'truck',
             title: 'Door-to-Door Delivery',
             text: 'Complete logistics including pickup, air transport, customs clearance, and final delivery.',
+            img: `${AIR}door-to-door.webp`,
           },
         ],
       },
@@ -161,12 +177,20 @@ export const services: Service[] = [
         cols: 3,
         cards: [
           // "CL" is a typo on the live site (likely "FCL") — kept verbatim, see docs/CONTENT.md.
-          card('warehouse', 'CL & LCL Expertise: Full and Less-than-Container Load options'),
+          card('warehouse', 'CL & LCL Expertise: Full and Less-than-Container Load options', `${SEA}fcl-lcl.webp`),
           card('customs', 'Customs Clearance: Included with all international shipments'),
-          card('ship', 'Jebel Ali Port Access: Direct access to the Middle East’s largest port'),
-          card('radar', 'Real-Time Tracking: Monitor shipment status with live updates'),
-          card('globe', 'Global Network: Partnerships with major shipping lines worldwide'),
-          card('tag', 'Cargo Insurance: Comprehensive coverage available'),
+          card(
+            'ship',
+            'Jebel Ali Port Access: Direct access to the Middle East’s largest port',
+            `${SEA}jebel-ali.webp`,
+          ),
+          card('radar', 'Real-Time Tracking: Monitor shipment status with live updates', `${SEA}tracking.webp`),
+          card(
+            'globe',
+            'Global Network: Partnerships with major shipping lines worldwide',
+            `${SEA}global-network.webp`,
+          ),
+          card('tag', 'Cargo Insurance: Comprehensive coverage available', `${SEA}insurance.webp`),
         ],
       },
       {
@@ -262,18 +286,22 @@ export const services: Service[] = [
           card(
             'customs',
             'Pre-Cleared Border Crossings: Our established relationships and documentation expertise ensure minimal delays at GCC borders.',
+            `${ROAD}border-crossing.webp`,
           ),
           card(
             'radar',
             'Real-Time GPS Tracking: Track your shipment with live status updates and location visibility across the entire GCC route.',
+            `${ROAD}gps-tracking.webp`,
           ),
           card(
             'truck',
             'Dedicated GCC Fleet: Modern trucks specifically maintained for long-distance GCC routes and varying terrain.',
+            `${ROAD}fleet.webp`,
           ),
           card(
             'bolt',
             'Temperature-Controlled Options: Refrigerated trucks available for perishable goods, pharmaceuticals, and sensitive materials.',
+            `${ROAD}reefer-truck.webp`,
           ),
         ],
       },
@@ -345,12 +373,12 @@ export const services: Service[] = [
         heading: ['Value-Added ', 'Services'],
         cols: 3,
         cards: [
-          card('warehouse', 'Inventory Management: Real-time stock tracking and reporting.'),
-          card('customs', 'Quality Inspections: Incoming and outgoing goods inspection.'),
-          card('tag', 'Pick & Pack: Order fulfillment and preparation for distribution.'),
-          card('globe', 'Cross-Docking: Direct transfer for faster distribution.'),
-          card('tag', 'Labeling & Repackaging: Custom packaging to meet requirements.'),
-          card('truck', 'Returns Processing: Efficient handling of returned goods.'),
+          card('warehouse', 'Inventory Management: Real-time stock tracking and reporting.', `${WH}inventory.webp`),
+          card('customs', 'Quality Inspections: Incoming and outgoing goods inspection.', `${WH}inspection.webp`),
+          card('tag', 'Pick & Pack: Order fulfillment and preparation for distribution.', `${WH}pick-pack.webp`),
+          card('globe', 'Cross-Docking: Direct transfer for faster distribution.', `${WH}cross-docking.webp`),
+          card('tag', 'Labeling & Repackaging: Custom packaging to meet requirements.', `${WH}labeling.webp`),
+          card('truck', 'Returns Processing: Efficient handling of returned goods.', `${WH}returns.webp`),
         ],
       },
     ],
@@ -378,10 +406,22 @@ export const services: Service[] = [
         heading: ['Why Choose Our ', 'Customs Services?'],
         cols: 2,
         cards: [
-          card('globe', 'GCC Specialists: Deep knowledge of all GCC customs regulations.'),
-          card('bolt', 'Pre-Clearance: Advance documentation submission to minimize delays'),
-          card('tag', 'Duty Optimization: Legitimate strategies to minimize duty payments.'),
-          card('phone', 'Single Point of Contact: Dedicated customs coordinator for your account'),
+          card(
+            'globe',
+            'GCC Specialists: Deep knowledge of all GCC customs regulations.',
+            `${CUS}gcc-specialists.webp`,
+          ),
+          card(
+            'bolt',
+            'Pre-Clearance: Advance documentation submission to minimize delays',
+            `${CUS}pre-clearance.webp`,
+          ),
+          card('tag', 'Duty Optimization: Legitimate strategies to minimize duty payments.', `${CUS}duty.webp`),
+          card(
+            'phone',
+            'Single Point of Contact: Dedicated customs coordinator for your account',
+            `${CUS}contact.webp`,
+          ),
         ],
       },
       {
@@ -394,21 +434,25 @@ export const services: Service[] = [
             icon: 'customs',
             title: 'Import Customs Clearance',
             text: 'Full clearance for goods entering UAE and other GCC countries. We handle Dubai Customs, FTA, and all port authorities.',
+            img: `${CUS}import.webp`,
           },
           {
             icon: 'plane',
             title: 'Export Customs Clearance',
             text: 'Preparation of all export documentation, certificates of origin, and compliance with destination country requirements.',
+            img: `${CUS}export.webp`,
           },
           {
             icon: 'warehouse',
             title: 'Bonded Warehouse Clearance',
             text: 'Clearance for goods stored in bonded warehouses and free zones across the GCC, including JAFZA, DAFZA, and KIZAD.',
+            img: `${CUS}bonded-warehouse.webp`,
           },
           {
             icon: 'radar',
             title: 'Specialized Goods Clearance',
             text: 'Expert handling of restricted items: pharmaceuticals, chemicals, perishables, electronics, and high-value commodities.',
+            img: `${CUS}specialized-goods.webp`,
           },
         ],
       },
@@ -449,16 +493,19 @@ export const services: Service[] = [
             icon: 'customs',
             title: 'UAE Customs Expertise',
             text: 'Specialized knowledge of Dubai Customs, FTA, and all UAE emirate regulations.',
+            img: `${CUS}uae-customs.webp`,
           },
           {
             icon: 'globe',
             title: 'GCC Customs Network',
             text: 'Strong connections with customs authorities across GCC countries for faster clearance.',
+            img: `${CUS}gcc-network.webp`,
           },
           {
             icon: 'users',
             title: 'Global Customs Partners',
             text: 'Trusted global network ensuring smooth and reliable international customs handling.',
+            img: `${CUS}global-partners.webp`,
           },
         ],
       },

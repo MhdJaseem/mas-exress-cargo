@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import { Icon } from '../ui/Icon';
 import { HashLink } from '../ui/HashLink';
 
@@ -55,7 +55,12 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
     <div className="hero stack" id="home">
       <div className="hero-slides" aria-hidden="true">
         {SLIDES.map((s, i) => (
-          <div key={s.img} className={`slide${i === cur ? ' on' : ''}`} data-i={i}>
+          <div
+            key={s.img}
+            className={`slide${i === cur ? ' on' : ''}`}
+            data-i={i}
+            style={{ '--img': `url('${s.img}')` } as CSSProperties}
+          >
             <div className="ph" style={{ backgroundImage: `url('${s.img}')` }} />
           </div>
         ))}

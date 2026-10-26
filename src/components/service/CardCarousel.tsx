@@ -215,7 +215,7 @@ export function CardCarousel({ cards, label }: { cards: Card[]; label: string })
 
   return (
     <div
-      className="cyl reveal"
+      className={`cyl${cards.some((c) => c.img) ? ' pics' : ''} reveal`}
       ref={stageRef}
       tabIndex={0}
       role="region"
@@ -224,7 +224,13 @@ export function CardCarousel({ cards, label }: { cards: Card[]; label: string })
     >
       <div className="cyl-ring" ref={ringRef}>
         {faces.map((c, i) => (
-          <div key={i} className="cyl-card" data-i={i} aria-hidden={i >= cards.length || undefined}>
+          <div
+            key={i}
+            className={`cyl-card${c.img ? ' has-img' : ''}`}
+            data-i={i}
+            aria-hidden={i >= cards.length || undefined}
+          >
+            {c.img && <img className="cimg" src={c.img} alt="" loading="lazy" decoding="async" draggable={false} />}
             <span className="fi">
               <Icon name={c.icon} />
             </span>

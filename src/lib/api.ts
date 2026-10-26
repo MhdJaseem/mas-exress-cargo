@@ -81,24 +81,34 @@ export interface ContactMessage {
   message: string;
 }
 
+// Inbox that receives "Send a Message" enquiries. Temporary test address: switch to the company inbox before launch.
+const MESSAGE_TO = 'mohammed.jaseem.a.2002@gmail.com';
+
 /**
- * Submit a "Send a Message" enquiry (home Contact card). Returns the message shown under the form.
- * Currently opens an email draft; swap for a POST to your backend / CRM.
+ * Submit a "Send a Message" enquiry (home Contact card). Resolves when the email has been sent.
+ * Sent through FormSubmit (formsubmit.co), which needs no backend. The very first submission makes
+ * FormSubmit email MESSAGE_TO an activation link; nothing is delivered until that link is clicked.
+ * Swap for a POST to your backend / CRM when one exists.
  */
-export function submitMessage(f: ContactMessage): string {
+export async function submitMessage(f: ContactMessage): Promise<void> {
   const name = (f.first + ' ' + f.last).trim();
-  const body =
-    'Website enquiry%0D%0A%0D%0AName: ' +
-    encodeURIComponent(name) +
-    '%0D%0AEmail Address: ' +
-    encodeURIComponent(f.email) +
-    '%0D%0ASubject: ' +
-    encodeURIComponent(f.subject) +
-    '%0D%0A%0D%0A' +
-    encodeURIComponent(f.message);
-  window.location.href =
-    'mailto:masexpresscargodubai@gmail.com?subject=' + encodeURIComponent(f.subject + ' - ' + name) + '&body=' + body;
-  return 'Opening your email app with your message…';
+  const r = await fetch('https://formsubmit.co/ajax/' + MESSAGE_TO, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+    body: JSON.stringify({
+      _subject: 'Website enquiry: ' + f.subject + ' - ' + name,
+      _replyto: f.email,
+      _template: 'table',
+      _captcha: 'false',
+      Name: name,
+      'Email Address': f.email,
+      Subject: f.subject,
+      Message: f.message,
+    }),
+  });
+  const data = (await r.json().catch(() => ({}))) as { success?: string | boolean; message?: string };
+  if (!r.ok || String(data.success) !== 'true')
+    throw new Error(data.message || 'Message not sent (HTTP ' + r.status + ')');
 }
 
 export interface JobApplication {

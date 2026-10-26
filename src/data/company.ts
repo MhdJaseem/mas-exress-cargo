@@ -96,7 +96,7 @@ export const teamGroups: { icon: IconName; title: string; members: Member[] }[] 
       { name: 'Essa Mohaiudeen', role: 'Regional Manager', text: 'Oversees regional performance and consistency.' },
       { name: 'Rabeeck Raja', role: 'Sales Head', text: 'Drives sales growth and client acquisition.' },
       { name: 'Ifham Haji', role: 'Chief officer', text: 'Supports leadership & operational coordination.' },
-      { name: 'Sheni Sherif', role: 'HR & Admin Manager', text: 'Manages human resources & Administration.' },
+      // { name: 'Sheni Sherif', role: 'HR & Admin Manager', text: 'Manages human resources & Administration.' },
     ],
   },
   {

@@ -7,6 +7,9 @@ export function IconSprite() {
         <symbol id="arrow" viewBox="0 0 24 24">
           <path d="M7 17 17 7M8 7h9v9" />
         </symbol>
+        <symbol id="check" viewBox="0 0 24 24">
+          <path d="M20 6 9 17l-5-5" />
+        </symbol>
         <symbol id="plus" viewBox="0 0 24 24">
           <path d="M12 5v14M5 12h14" />
         </symbol>

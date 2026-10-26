@@ -3,6 +3,7 @@ import type { CSSProperties } from 'react';
 /** Symbols defined in components/layout/IconSprite.tsx. Add new ones there first. */
 export type IconName =
   | 'arrow'
+  | 'check'
   | 'plus'
   | 'chev'
   | 'menu'

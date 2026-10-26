@@ -16,7 +16,7 @@
 6. **About video** — `#aboutVideo` plays when visible, pauses off-screen; muted/loop/playsinline.
 7. **Stats** — `CountUp` counts the number up once when 60% visible (static under reduced motion).
 8. **Pickup form** — validates all four fields, then `submitPickup()`.
-   **Send a Message form** (Contact Us card) — requires first name, email (format-checked), subject and message, then `submitMessage()`.
+   **Send a Message form** (Contact Us card) — three steps: name (first name required) → email (format-checked) → subject + message, then `await submitMessage()` (FormSubmit AJAX) and a thank-you screen with a confetti burst.
 
 ## Service and company pages
 
@@ -24,7 +24,7 @@
 
 ## `src/lib/api.ts`
 
-`trackShipment(no)` → `Promise<TrackingResult>` · `submitPickup(f)` → message string · `submitMessage(f)` → message string · `submitApplication(f)` → message string. See TRACKING_API.md.
+`trackShipment(no)` → `Promise<TrackingResult>` · `submitPickup(f)` → message string · `submitMessage(f)` → `Promise<void>` (throws if not sent) · `submitApplication(f)` → message string. See TRACKING_API.md.
 
 ## Accessibility notes
 

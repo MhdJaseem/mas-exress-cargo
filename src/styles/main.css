@@ -257,16 +257,37 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .pickup .msg{grid-column:1/-1;font-size:13px;min-height:20px}
 .contact{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:26px;display:flex;flex-direction:column;gap:6px}
 .contact h2{font-size:clamp(20px,2.1vw,27px);text-transform:uppercase;margin-bottom:10px}
-.crow{display:flex;gap:14px;align-items:flex-start;padding:13px 0;border-top:1px solid var(--line)}
-.crow .ic{width:40px;height:40px;border-radius:12px;background:var(--brand-tint);color:var(--brand);display:grid;place-items:center;flex:none}
-.crow small{display:block;color:var(--muted);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase}
-.crow a:hover{color:var(--brand-text)}
-.crow .v{font-size:14px;overflow-wrap:anywhere}
-.crow>span:last-child{min-width:0}
 .socials{display:flex;gap:10px;margin-top:10px}
-/* Send a Message form (contact card) + contact-details strip */
-.contact .mf{flex:1;grid-template-rows:auto auto 1fr auto auto}
-@media (max-width:620px){.contact .mf{grid-template-rows:none}}
+/* Send a Message form (contact card) */
+.contact .mf{flex:1;display:flex;flex-direction:column;gap:14px}
+.mf-progress{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.mf-progress span{height:4px;border-radius:4px;background:var(--line);transition:background .35s var(--ease)}
+.mf-progress span.on{background:var(--brand)}
+.mf-progress small{grid-column:1/-1;color:var(--muted);font-size:12px;letter-spacing:.04em;margin-top:4px}
+.mf-step{display:grid;grid-template-columns:1fr 1fr;gap:12px;animation:mfIn .45s var(--ease) both}
+.mf-step.grow{flex:1;grid-template-rows:auto 1fr}
+@media (max-width:620px){.mf-step{grid-template-columns:minmax(0,1fr)}}
+@keyframes mfIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
+.mf-actions{display:flex;gap:10px;margin-top:auto}
+.contact .mf-actions .btn{flex:1}
+.contact .mf-actions .mf-back{flex:0 0 auto;background:#fff;color:var(--ink);border:1px solid var(--line)}
+.contact .mf-actions .mf-back:hover{background:var(--paper)}
+.contact .btn:disabled{opacity:.6;cursor:wait;transform:none}
+/* thank-you screen + confetti burst */
+.mf-done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 8px;outline:0;overflow:hidden;animation:mfIn .45s var(--ease) both}
+.mf-done h3{font-size:clamp(20px,2vw,24px);font-weight:500}
+.mf-done p{color:var(--muted);font-size:14px;max-width:34ch;overflow-wrap:anywhere}
+.mf-done p b{color:var(--ink);font-weight:500}
+.mf-done .btn{margin-top:8px}
+.mf-burst{position:relative;width:72px;height:72px;margin-bottom:6px;display:grid;place-items:center}
+.mf-tick{width:72px;height:72px;border-radius:50%;background:var(--brand);color:#fff;display:grid;place-items:center;animation:mfPop .6s cubic-bezier(.3,1.6,.5,1) both}
+.mf-tick svg{width:34px;height:34px;stroke-width:2.6}
+@keyframes mfPop{0%{transform:scale(0)}100%{transform:scale(1)}}
+.mf-confetti{position:absolute;inset:0;pointer-events:none}
+.mf-confetti i{position:absolute;left:50%;top:50%;width:8px;height:12px;margin:-6px 0 0 -4px;border-radius:2px;background:var(--c);opacity:0;animation:mfBlast var(--t) cubic-bezier(.15,.7,.3,1) .12s both}
+.mf-confetti i:nth-child(3n){width:7px;height:7px;border-radius:50%}
+@keyframes mfBlast{0%{opacity:1;transform:translate(0,0) rotate(0) scale(.6)}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),calc(var(--y) + 60px)) rotate(var(--r)) scale(1)}}
+@media (prefers-reduced-motion:reduce){.mf-step,.mf-done,.mf-tick{animation:none}.mf-confetti{display:none}}
 .fld textarea{border-radius:var(--r-sm);border:1px solid transparent;background:#fff;color:var(--ink);padding:10px 12px;font:inherit;font-size:14px;width:100%;resize:vertical;min-height:96px;flex:1}
 .contact .fld textarea{min-height:96px}
 .fld textarea:focus{outline:3px solid var(--ink)}
@@ -275,12 +296,6 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .contact .btn{background:var(--brand);color:#fff;grid-column:1/-1;height:44px}
 .contact .btn:hover{background:var(--brand-deep)}
 .contact .msg{grid-column:1/-1;font-size:13px;min-height:20px}
-.cstrip{grid-column:1/-1;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:6px 26px;display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,1.4fr) auto;gap:0 28px;align-items:center}
-.cstrip .crow{border-top:0}
-.cstrip .socials{margin-top:0}
-@media (max-width:1180px){.cstrip{grid-template-columns:auto minmax(0,1fr) minmax(0,1.4fr)}.cstrip .socials{grid-column:1/-1;padding-bottom:14px}}
-@media (max-width:960px){.cstrip{grid-template-columns:minmax(0,1fr);padding:10px 22px 16px}.cstrip .crow+.crow{border-top:1px solid var(--line)}.cstrip .socials{padding-bottom:0;margin-top:8px}}
-@media (max-width:620px){.cstrip{padding:10px 16px 16px}}
 .socials a{width:40px;height:40px;border-radius:12px;border:1px solid var(--line);background:#fff;display:grid;place-items:center;transition:.2s}
 .socials a:hover{background:var(--brand);color:#fff;border-color:var(--brand)}
 
@@ -581,6 +596,17 @@ html body .hero{padding-bottom:16px;min-height:min(calc(100vh - 16px),780px)}
 @keyframes slfill{to{width:100%}}
 .slidenav:focus-within button:focus-visible{outline:2px solid #fff;outline-offset:2px}
 @media (max-width:900px){.hero-slides .slide[data-i="1"] .ph{background-position:68% 50%}.hero-slides .slide[data-i="2"] .ph{background-position:35% 50%}.hero-slides .slide[data-i="0"] .ph{background-position:93% 50%}.hero-slides .sbrand{top:30%;right:7%}}
+/* portrait screens (phones, upright tablets): the sea and truck photos are wide panoramas, so "cover"
+   only shows a sliver of them. Instead the whole ship/truck is fitted into the open band between the
+   headline and the cards, feathered into a blurred, darkened copy of the same photo that fills the hero. */
+@media (orientation:portrait){
+  .hero-slides .slide[data-i="1"]::before,.hero-slides .slide[data-i="2"]::before{content:"";position:absolute;inset:-40px;background:var(--img) 50% 50%/cover no-repeat;filter:blur(22px) brightness(.62) saturate(1.1)}
+  .hero-slides .slide[data-i="1"] .ph,.hero-slides .slide[data-i="2"] .ph{inset:auto;left:50%;top:45%;width:auto;background-size:100% 100%;background-position:0 0}
+  .hero-slides .slide[data-i="1"] .ph{aspect-ratio:2616/1796;height:min(80vw,70%);translate:-53% -50%;transform-origin:53% 50%;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 24%,#000 76%,transparent);mask-image:linear-gradient(180deg,transparent,#000 24%,#000 76%,transparent)}
+  .hero-slides .slide[data-i="2"] .ph{aspect-ratio:3248/784;height:min(66vw,50%);translate:-48% -60%;transform-origin:48% 60%;
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 20%,#000 93%,transparent);mask-image:linear-gradient(180deg,transparent,#000 20%,#000 93%,transparent)}
+}
 
 /* ============ testimonials: copy left, endless upward comments right ============ */
 .tsplit{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,70px);align-items:center}

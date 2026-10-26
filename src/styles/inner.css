@@ -39,6 +39,13 @@
 .cyl-nav button:hover{background:var(--brand);border-color:var(--brand);color:#fff}
 .cyl-nav button:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
 @media (max-width:640px){.cyl{height:370px}.cyl-card{top:31%;width:204px;height:262px;margin:-131px 0 0 -102px;padding:18px}.cyl::after{background:linear-gradient(90deg,var(--white),transparent 8%,transparent 92%,var(--white))}}
+/* cards with a photo (img in data/services.ts): photo bleeds to the card edges, icon badge overlaps its bottom edge.
+   The whole carousel gets the taller size so cards without a photo line up with the rest. */
+.cyl.pics{height:410px}
+.cyl.pics .cyl-card{top:31%;height:298px;margin-top:-149px}
+.cyl-card .cimg{display:block;width:calc(100% + 40px);max-width:none;margin:-20px -20px 0;aspect-ratio:16/9;object-fit:cover;border-radius:calc(var(--r-md) - 1px) calc(var(--r-md) - 1px) 0 0;background:var(--line);pointer-events:none}
+.cyl-card.has-img .fi{position:relative;margin:-21px 0 auto;box-shadow:0 0 0 3px var(--white)}
+@media (max-width:640px){.cyl.pics{height:420px}.cyl.pics .cyl-card{top:33%;height:298px;margin-top:-149px}.cyl-card .cimg{width:calc(100% + 36px);margin:-18px -18px 0}}
 
 /* process steps: dark "shipment route" — nodes light up and the dashed rail fills red as each step reveals */
 .psteps{position:relative;overflow:hidden;isolation:isolate;background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:30px 30px 6px}
