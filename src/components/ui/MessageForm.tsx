@@ -122,6 +122,11 @@ export function MessageForm() {
 
   return (
     <form className="pf mf" id="messageForm" noValidate onSubmit={submit}>
+      {step > 0 && (
+        <button className="mf-back" type="button" onClick={() => go(step - 1)} disabled={sending}>
+          <Icon name="chev" /> Back
+        </button>
+      )}
       <div className="mf-progress" aria-label={`Step ${step + 1} of 3: ${STEPS[step]}`}>
         {STEPS.map((s, i) => (
           <span key={s} className={i <= step ? 'on' : undefined} />
@@ -204,11 +209,6 @@ export function MessageForm() {
       )}
 
       <div className="mf-actions">
-        {step > 0 && (
-          <button className="btn light mf-back" type="button" onClick={() => go(step - 1)} disabled={sending}>
-            Back
-          </button>
-        )}
         <button className="btn" type="submit" disabled={sending}>
           {step < 2 ? 'Continue' : sending ? 'Sending…' : 'Send Message'} <Icon name="arrow" />
         </button>

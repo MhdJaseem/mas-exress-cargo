@@ -52,4 +52,4 @@ Home: 1180, 1100, 960, 900 (stack mode on/off at 900), 620. Inner pages: 980 (si
 
 ## Photography
 
-Real photos only (no illustrations): air (hero-air), sea (hero-sea), road (hero-road), warehouse aisle (card-warehouse), container-at-port (about-poster, used for Customs), plane-over-ship (why-cargo). Overlay gradients keep white text legible. Service page headers use the live site's own page photos (`img/pages/<page>.webp`).
+Real photos only (no illustrations): air (hero-air), sea (hero-sea), road (hero-road), warehouse aisle (card-warehouse), container-at-port (about-poster, used for Customs). (`sections/why-cargo.jpg`, plane over ship, is no longer used since Why Choose Us dropped its photo.) Overlay gradients keep white text legible. Service page headers use the live site's own page photos (`img/pages/<page>.webp`).

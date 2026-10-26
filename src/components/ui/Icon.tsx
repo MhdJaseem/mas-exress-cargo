@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 export type IconName =
   | 'arrow'
   | 'check'
+  | 'calendar'
   | 'plus'
   | 'chev'
   | 'menu'

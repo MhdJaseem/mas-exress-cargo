@@ -95,15 +95,6 @@ export function AboutSection() {
             <Link className="btn brand" to="/about">
               More About Us <Icon name="arrow" />
             </Link>
-            <div className="callus">
-              <span className="ph">
-                <Icon name="phone" />
-              </span>
-              <span>
-                <small>Call Us</small>
-                <a href="tel:+9718004786">+971 800 4786</a>
-              </span>
-            </div>
           </div>
         </div>
       </div>

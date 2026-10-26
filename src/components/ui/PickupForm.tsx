@@ -1,6 +1,8 @@
 import { useState, type FormEvent } from 'react';
 import { submitPickup } from '../../lib/api';
 import { Icon } from './Icon';
+import { Select } from './Select';
+import { DatePicker } from './DatePicker';
 
 export const SHIPMENT_MODES = ['Air Freight', 'Sea Freight', 'Land Transport'] as const;
 export type ShipmentMode = (typeof SHIPMENT_MODES)[number];
@@ -29,7 +31,15 @@ const COUNTRY_CODES = [
   '🇸🇬 Singapore (+65)',
 ];
 
-const today = () => new Date().toISOString().slice(0, 10);
+/** Pickup time slots every 30 minutes, stored as hh:mm (24h) and shown as e.g. "9:30 AM". */
+const TIME_SLOTS = Array.from(
+  { length: 48 },
+  (_, i) => `${String(Math.floor(i / 2)).padStart(2, '0')}:${i % 2 ? '30' : '00'}`,
+);
+const fmtTime = (v: string) => {
+  const [h, mm] = v.split(':').map(Number);
+  return `${h % 12 || 12}:${String(mm).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}`;
+};
 
 /** Request Pickup form (home page and service-page sidebar). Only one per page — ids are fixed. */
 export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | '' }) {
@@ -55,11 +65,7 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
       <div className="fld full">
         <label htmlFor="pnum">Phone number</label>
         <div className="phone">
-          <select id="pcc" aria-label="Country code" value={cc} onChange={(e) => setCc(e.target.value)}>
-            {COUNTRY_CODES.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
+          <Select id="pcc" aria-label="Country code" value={cc} options={COUNTRY_CODES} onChange={setCc} />
           <input
             id="pnum"
             type="tel"
@@ -74,20 +80,23 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
       </div>
       <div className="fld full">
         <label htmlFor="pmode">Shipment Mode</label>
-        <select id="pmode" required value={m} onChange={(e) => setM(e.target.value)}>
-          <option value="">Select mode</option>
-          {SHIPMENT_MODES.map((o) => (
-            <option key={o}>{o}</option>
-          ))}
-        </select>
+        <Select id="pmode" value={m} options={SHIPMENT_MODES} onChange={setM} placeholder="Select mode" />
       </div>
       <div className="fld">
         <label htmlFor="pdate">Pickup Date</label>
-        <input id="pdate" type="date" required min={today()} value={d} onChange={(e) => setD(e.target.value)} />
+        <DatePicker id="pdate" value={d} onChange={setD} />
       </div>
       <div className="fld">
         <label htmlFor="ptime">Pickup Time</label>
-        <input id="ptime" type="time" required value={t} onChange={(e) => setT(e.target.value)} />
+        <Select
+          id="ptime"
+          value={t}
+          options={TIME_SLOTS}
+          onChange={setT}
+          format={fmtTime}
+          startAt="09:00"
+          placeholder="Select time"
+        />
       </div>
       <button className="btn" type="submit">
         Submit <Icon name="arrow" />

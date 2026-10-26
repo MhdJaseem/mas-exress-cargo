@@ -25,10 +25,6 @@ export function Footer() {
             <Link className="flogo" to="/" aria-label="MAS Express Cargo L.L.C — home">
               <img src="/img/brand/logo-full.png" alt="MAS Express Cargo L.L.C — From your doorstep to their smile" />
             </Link>
-            <p className="desc">
-              Access your shipment's real-time status, location, and documents through our integrated MAS Express Cargo
-              Tracking System.
-            </p>
             <Socials />
           </div>
           <div>
@@ -70,19 +66,30 @@ export function Footer() {
           </div>
           <div>
             <h4>Contact Us</h4>
-            <ul>
+            <ul className="fcontact">
               <li>
+                <span className="fic">
+                  <Icon name="phone" />
+                </span>
                 <a href={CONTACT.phone.href}>{CONTACT.phone.label}</a>
               </li>
               <li>
+                <span className="fic">
+                  <Icon name="mail" />
+                </span>
                 <a href={`mailto:${CONTACT.emails[0]}`}>{CONTACT.emails[0]}</a>
               </li>
               <li style={{ color: '#d6d8db', fontSize: 14, lineHeight: 1.5 }}>
-                <b style={{ fontWeight: 500, color: '#fff' }}>Our Address</b>
-                <br />
-                MAS Express Cargo.
-                <br />
-                Warehouse number - 08 , Industrial area - 17, Near - Diana Trade , Sharjah UAE.
+                <span className="fic">
+                  <Icon name="pin" />
+                </span>
+                <span>
+                  <b style={{ fontWeight: 500, color: '#fff' }}>Our Address</b>
+                  <br />
+                  MAS Express Cargo.
+                  <br />
+                  Warehouse number - 08 , Industrial area - 17, Near - Diana Trade , Sharjah UAE.
+                </span>
               </li>
             </ul>
           </div>

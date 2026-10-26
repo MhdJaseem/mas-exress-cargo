@@ -4,6 +4,7 @@
   --brand-deep:#B5141A;   /* hover / pressed state                        */
   --brand-text:#C4141A;   /* red for small text on white (accessible)     */
   --brand-tint:rgba(227,30,36,.09);
+  --wa:#25D366;          /* WhatsApp brand green — WhatsApp button only  */
 
   --ink:#151515;          /* logo black — headings, dark buttons, footer  */
   --text:#1c1c1e;
@@ -147,17 +148,17 @@ table.hist td{padding:14px;color:var(--muted)}
 .feat .ic .i{width:19px;height:19px}
 .feat h3{font-size:15.5px;font-weight:500;margin-bottom:2px}
 .feat p{color:var(--muted);font-size:13.5px}
+/* home About: the two features as side-by-side upright boxes, icon on top, text at the bottom */
+.about .feat{grid-template-columns:1fr 1fr;gap:12px}
+.about .feat div{flex-direction:column;justify-content:space-between;gap:28px;min-height:190px;padding:18px}
+.about .feat h3{margin-bottom:6px}
 .about .body{color:#3b3e42;margin-bottom:20px}
-.callus{display:flex;align-items:center;gap:12px;padding-left:4px}
-.callus .ph{width:42px;height:42px;border-radius:50%;background:var(--ink);color:#fff;display:grid;place-items:center}
-.callus small{display:block;color:var(--muted);font-size:12px}
-.callus a{font-size:17px;font-weight:500}
-.callus a:hover{color:var(--brand-text)}
 
 /* ---------- services (dark panel, line-art cards) ---------- */
 #services{background:var(--ink);color:#fff;border-radius:var(--r-lg);position:relative;overflow:hidden}
 #services::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(115deg,rgba(227,30,36,.10) 0 30px,transparent 30px 74px);-webkit-mask-image:linear-gradient(180deg,#000,transparent 55%);mask-image:linear-gradient(180deg,#000,transparent 55%)}
 #services .wrap{position:relative}
+#services{padding-top:72px;padding-bottom:72px} /* extra breathing room above the heading and below the chips */
 #services h2{color:#fff}
 #services .eyebrow{color:#ff7a7e}
 #services p.lead{color:#b4b7bb}
@@ -174,10 +175,10 @@ table.hist td{padding:14px;color:var(--muted)}
 .svc .badge{position:absolute;left:14px;top:112px;width:40px;height:40px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;z-index:2;box-shadow:0 8px 20px rgba(227,30,36,.4)}
 .svc .badge .i{width:20px;height:20px}
 .svc .tx{padding:34px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
-.svc h3{font-size:17px;font-weight:400;color:#fff}
+.svc h3{font-size:17px;font-weight:600;letter-spacing:.01em;color:#fff}
 .svc p{color:#b4b7bb;font-size:13px;flex:1}
 .more{display:inline-flex;align-items:center;gap:7px;color:var(--brand-text);font-weight:500;font-size:13px}
-#services .more{color:#ff7a7e}
+#services .more{color:#ff7a7e;align-self:flex-end;margin-top:6px} /* bottom-right of the card */
 .more .i{transition:transform .25s}
 .svc:hover .more .i{transform:translate(3px,-3px)}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
@@ -192,20 +193,30 @@ table.hist td{padding:14px;color:var(--muted)}
 /* ---------- why (red panel + route map) ---------- */
 section#why{padding:10px 0}
 .why-wrap{background:var(--brand);color:#fff;border-radius:var(--r-lg);padding:40px 28px;position:relative;overflow:hidden}
-.why-wrap::after{content:"";position:absolute;right:-120px;top:-140px;width:380px;height:380px;border-radius:50%;background:rgba(255,255,255,.07)}
+.why-wrap::after{content:"";position:absolute;right:-4%;top:clamp(36px,7vw,96px);width:min(760px,62%);aspect-ratio:760/130;background:rgba(255,255,255,.08);-webkit-mask:url(/img/brand/logo-mark.png) center/contain no-repeat;mask:url(/img/brand/logo-mark.png) center/contain no-repeat;pointer-events:none} /* faint MAS logo watermark */
 .why-wrap .eyebrow{color:#fff}
 .why-wrap .eyebrow::before{background:#fff}
 .why-wrap h2{color:#fff}
 .why-wrap h2.big em{color:var(--ink)}
+/* logo in place of the words "MAS Express." — a mask so it shows in solid white (the red logo would vanish on the red panel) */
+.why-wrap h2 .hlogo{display:inline-block;vertical-align:-.12em;height:1.05em;aspect-ratio:760/130;background:#fff;-webkit-mask:url(/img/brand/logo-mark.png) center/contain no-repeat;mask:url(/img/brand/logo-mark.png) center/contain no-repeat}
 .why-grid{display:grid;grid-template-columns:1fr 1.25fr;gap:26px;align-items:center;position:relative;z-index:1}
-.why{margin-top:22px}
-.why li{display:flex;align-items:center;gap:13px;padding:11px 10px;border-top:1px solid rgba(255,255,255,.3);border-radius:12px;transition:.25s var(--ease)}
-.why li:last-child{border-bottom:1px solid rgba(255,255,255,.3)}
-.why li:hover{background:rgba(255,255,255,.14);transform:translateX(4px)}
-.why .n{font-size:11.5px;letter-spacing:.12em;opacity:.8;width:20px}
-.why .ic{width:36px;height:36px;border-radius:11px;background:#fff;color:var(--brand);display:grid;place-items:center;flex:none}
-.why .ic .i{width:18px;height:18px}
-.why h3{font-size:15.5px;font-weight:400;line-height:1.2;color:#fff}
+/* five feature cards: icon top, outlined number top-right, text bottom; hover turns the card white */
+.why{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px;margin:0}
+.why li{position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;gap:28px;min-height:clamp(210px,24vh,270px);padding:20px 18px 22px;border-radius:var(--r-md);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.22);transition:background .35s var(--ease),border-color .35s,transform .35s var(--ease),box-shadow .35s}
+.why li::after{content:"";position:absolute;left:18px;bottom:0;height:3px;width:28px;border-radius:3px 3px 0 0;background:rgba(255,255,255,.6);transition:width .45s var(--ease),background .35s}
+.why .ic{width:46px;height:46px;border-radius:13px;background:#fff;color:var(--brand);display:grid;place-items:center;flex:none;transition:background .35s,color .35s}
+.why .ic .i{width:21px;height:21px}
+.why .n{position:absolute;top:10px;right:14px;font-size:clamp(48px,4.6vw,68px);font-weight:600;line-height:1;letter-spacing:-.02em;color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.5);transition:-webkit-text-stroke-color .35s;user-select:none}
+.why h3{font-size:clamp(15.5px,1.25vw,18px);font-weight:500;line-height:1.25;color:#fff;transition:color .35s}
+.why li:hover{background:#fff;border-color:#fff;transform:translateY(-6px);box-shadow:0 22px 50px rgba(90,0,0,.35)}
+.why li:hover::after{width:calc(100% - 36px);background:var(--brand)}
+.why li:hover .ic{background:var(--brand);color:#fff}
+.why li:hover .n{-webkit-text-stroke-color:rgba(227,30,36,.55)}
+.why li:hover h3{color:var(--ink)}
+@media (max-width:1100px){.why{grid-template-columns:repeat(6,minmax(0,1fr))}.why li{grid-column:span 2}.why li:nth-child(n+4){grid-column:span 3}}
+@media (max-width:620px){.why{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.why li,.why li:nth-child(n+4){grid-column:auto;min-height:170px;padding:16px 14px 18px}.why li:last-child{grid-column:1/-1}.why .ic{width:40px;height:40px}}
+@media (prefers-reduced-motion:reduce){.why li:hover{transform:none}}
 .netmap{background:var(--ink);border-radius:var(--r-lg);border:1px solid rgba(255,255,255,.14);overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.25)}
 .netmap svg{display:block;width:100%;height:auto}
 .route{stroke-dasharray:4 6;animation:dash 1.4s linear infinite}
@@ -251,6 +262,40 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fld label{font-size:13px;font-weight:500}
 .fld input,.fld select{height:42px;border-radius:var(--r-sm);border:1px solid transparent;background:#fff;color:var(--ink);padding:0 12px;font-size:14px;width:100%}
 .fld input:focus,.fld select:focus{outline:3px solid var(--ink)}
+/* custom dropdown (components/ui/Select.tsx) — same look as the inputs, styled option list */
+.sel{position:relative;min-width:0}
+.sel>button{height:42px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:8px;border-radius:var(--r-sm);border:1px solid transparent;background:#fff;color:var(--ink);padding:0 12px;font-size:14px;text-align:left;cursor:pointer}
+.sel>button span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sel>button.ph span{color:var(--muted)}
+.sel>button .i{width:16px;height:16px;flex:none;transition:transform .25s var(--ease)}
+.sel.open>button .i{transform:rotate(180deg)}
+.sel>button:focus-visible,.sel.open>button{outline:3px solid var(--ink)}
+.sel-list{position:absolute;left:0;top:calc(100% + 6px);z-index:30;min-width:100%;width:max-content;max-width:min(300px,calc(100vw - 32px));max-height:264px;overflow:auto;margin:0;padding:6px;list-style:none;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:0 22px 50px rgba(21,21,21,.22);animation:selIn .18s var(--ease) both}
+.sel-list[hidden]{display:none}
+.sel-list li{display:flex;align-items:center;justify-content:space-between;gap:14px;min-height:40px;padding:0 12px;border-radius:10px;font-size:14px;cursor:pointer;white-space:nowrap}
+.sel-list li.act{background:var(--brand-tint);color:var(--brand-text)}
+.sel-list li[aria-selected="true"]{font-weight:500}
+.sel-list li .i{width:16px;height:16px;color:var(--brand);flex:none}
+/* calendar (components/ui/DatePicker.tsx) — reuses the .sel trigger and .sel-list card */
+.dp-panel{width:292px;max-height:none;overflow:visible;padding:12px}
+.dp-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.dp-head b{font-weight:500;font-size:14.5px}
+.dp-nav{width:34px;height:34px;border-radius:10px;border:1px solid var(--line);background:#fff;color:var(--ink);display:grid;place-items:center;cursor:pointer}
+.dp-nav:hover:not(:disabled){background:var(--brand-tint);color:var(--brand-text);border-color:transparent}
+.dp-nav:disabled{opacity:.35;cursor:default}
+.dp-nav .i{width:16px;height:16px}
+.dp-nav.prev .i{transform:rotate(90deg)}
+.dp-nav.next .i{transform:rotate(-90deg)}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.dp-wd{text-decoration:none;text-align:center;font-size:11.5px;color:var(--muted);padding:4px 0 6px}
+.dp-day{height:36px;border:0;border-radius:10px;background:transparent;color:var(--ink);font-size:13.5px;cursor:pointer}
+.dp-day:hover:not(:disabled),.dp-day.act{background:var(--brand-tint);color:var(--brand-text)}
+.dp-day.today{box-shadow:inset 0 0 0 1px var(--brand)}
+.dp-day.on,.dp-day.on:hover{background:var(--brand);color:#fff}
+.dp-day:disabled{color:rgba(21,21,21,.25);cursor:default}
+.dp-day:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+@keyframes selIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.sel-list{animation:none}}
 .phone{display:grid;grid-template-columns:140px 1fr;gap:8px}
 .pickup .btn{background:var(--ink);color:#fff;grid-column:1/-1;height:44px}
 .pickup .btn:hover{background:#000}
@@ -270,8 +315,14 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @keyframes mfIn{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
 .mf-actions{display:flex;gap:10px;margin-top:auto}
 .contact .mf-actions .btn{flex:1}
-.contact .mf-actions .mf-back{flex:0 0 auto;background:#fff;color:var(--ink);border:1px solid var(--line)}
-.contact .mf-actions .mf-back:hover{background:var(--paper)}
+/* Back: top-right corner of the Contact card, level with the heading */
+.contact{position:relative}
+.mf-back{position:absolute;top:24px;right:24px;display:inline-flex;align-items:center;gap:4px;height:36px;padding:0 14px 0 10px;border-radius:999px;border:1px solid var(--line);background:#fff;color:var(--ink);font-size:13.5px;font-weight:500;cursor:pointer;transition:background .2s,color .2s,border-color .2s}
+.mf-back:hover{background:var(--brand-tint);color:var(--brand-text);border-color:transparent}
+.mf-back:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.mf-back:disabled{opacity:.5;cursor:wait}
+.mf-back .i{width:16px;height:16px;transform:rotate(90deg)}
+@media (max-width:620px){.mf-back{top:18px;right:16px}}
 .contact .btn:disabled{opacity:.6;cursor:wait;transform:none}
 /* thank-you screen + confetti burst */
 .mf-done{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:24px 8px;outline:0;overflow:hidden;animation:mfIn .45s var(--ease) both}
@@ -304,7 +355,7 @@ footer{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:40px 2
 footer::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--brand)}
 .fgrid{display:grid;grid-template-columns:1.5fr 1fr 1fr 1fr 1.3fr;gap:28px}
 footer .flogo img{width:220px;max-width:100%;height:auto}
-footer p.desc{color:#b9bcc0;margin:16px 0;max-width:320px;font-size:13px}
+footer .flogo+.socials{margin-top:18px}
 footer h4{font-weight:500;font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:10px}
 footer h4::before{content:"";width:14px;height:3px;background:var(--brand);border-radius:3px}
 footer li{margin-bottom:8px}
@@ -313,20 +364,25 @@ footer li a:hover{color:#ff5a5f}
 footer .socials a{background:transparent;border-color:rgba(255,255,255,.2);color:#fff}
 footer .socials a:hover{background:var(--brand);border-color:var(--brand)}
 footer li,footer p{overflow-wrap:anywhere}
+/* Contact Us column: icon chip beside each line */
+footer .fcontact li{display:flex;align-items:flex-start;gap:12px;margin-bottom:14px}
+footer .fcontact li>a,footer .fcontact li>span:last-child{min-width:0;padding-top:6px}
+footer .fcontact .fic{width:32px;height:32px;border-radius:10px;background:rgba(227,30,36,.16);color:var(--brand);display:grid;place-items:center;flex:none}
+footer .fcontact .fic .i{width:16px;height:16px}
 .copy{margin-top:34px;padding-top:18px;border-top:1px solid rgba(255,255,255,.14);color:#9a9da2;font-size:13px}
 
 /* ---------- whatsapp widget ---------- */
 .wa{position:fixed;right:24px;bottom:24px;z-index:150}
-.wa>button{width:52px;height:52px;border-radius:16px;background:var(--brand);color:#fff;border:0;cursor:pointer;display:grid;place-items:center;box-shadow:0 14px 36px rgba(227,30,36,.45);transition:transform .25s var(--ease)}
+.wa>button{width:52px;height:52px;border-radius:16px;background:var(--wa);color:#fff;border:0;cursor:pointer;display:grid;place-items:center;box-shadow:0 14px 36px rgba(37,211,102,.45);transition:transform .25s var(--ease)}
 .wa>button:hover{transform:scale(1.06)}
-.wa>button .i{width:28px;height:28px}
+.wa>button .i{width:30px;height:30px}
 .wa .pop{position:absolute;right:0;bottom:66px;width:290px;background:#fff;color:var(--ink);border:1px solid var(--line);border-radius:var(--r-md);padding:20px;box-shadow:0 24px 60px rgba(21,21,21,.25);opacity:0;visibility:hidden;transform:translateY(10px);transition:.25s var(--ease)}
 .wa.open .pop{opacity:1;visibility:visible;transform:none}
 .wa .pop h4{font-size:20px;font-weight:500}
 .wa .pop p{font-size:15px;color:var(--muted);margin:4px 0 14px}
 .wa .pop a{display:flex;align-items:center;gap:12px;padding:12px;border-radius:14px;background:var(--paper);margin-bottom:8px;border:1px solid var(--line);transition:.2s}
 .wa .pop a:hover{border-color:var(--brand);background:#fff}
-.wa .pop a .ic{width:42px;height:42px;border-radius:12px;background:var(--brand);color:#fff;display:grid;place-items:center;flex:none}
+.wa .pop a .ic{width:42px;height:42px;border-radius:12px;background:var(--wa);color:#fff;display:grid;place-items:center;flex:none}
 .wa .pop a small{display:block;color:var(--muted);font-size:13px}
 .wa .pop a b{font-weight:500;font-size:16px}
 .wa .pop .avail{font-size:13px;color:var(--muted);margin-top:6px}
@@ -442,6 +498,7 @@ section#why .why-wrap{background:transparent;border-radius:0}
 /* sections become full-height cards that slide over each other */
 html.stackmode .stack{position:sticky;top:8px;min-height:min(calc(100vh - 16px),880px);display:flex;flex-direction:column;justify-content:center;border-radius:var(--r-lg);box-shadow:0 -28px 60px rgba(14,18,24,.24);transform-origin:50% 0;will-change:transform,filter}
 html.stackmode #services,html.stackmode #why,html.stackmode #testimonials{position:sticky}
+html.stackmode #services{padding-top:112px;padding-bottom:88px}
 html.stackmode .stack>.wrap{width:100%}
 html.stackmode section.stack{padding-top:84px;padding-bottom:50px}
 html.stackmode section#why{padding-top:70px;padding-bottom:30px}
@@ -611,11 +668,11 @@ html body .hero{padding-bottom:16px;min-height:min(calc(100vh - 16px),780px)}
 /* ============ testimonials: copy left, endless upward comments right ============ */
 .tsplit{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,5vw,70px);align-items:center}
 .tleft .lead{margin-top:16px;max-width:430px}
-.tmarq{position:relative;height:clamp(420px,62vh,560px);overflow:hidden;-webkit-mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent);mask-image:linear-gradient(180deg,transparent,#000 12%,#000 88%,transparent)}
-.ttrack{display:flex;flex-direction:column;animation:tup 42s linear infinite;will-change:transform}
-.tmarq:hover .ttrack,.tmarq:focus-within .ttrack{animation-play-state:paused}
+.tmarq{position:relative;height:clamp(420px,62vh,560px);overflow:hidden;cursor:grab;touch-action:none;-webkit-mask-image:linear-gradient(180deg,transparent,#000 22px,#000 calc(100% - 22px),transparent);mask-image:linear-gradient(180deg,transparent,#000 22px,#000 calc(100% - 22px),transparent)} /* light 22px edge fade */
+.tmarq.dragging{cursor:grabbing;user-select:none;-webkit-user-select:none}
+.tmarq.dragging .tm{pointer-events:none}
+.ttrack{display:flex;flex-direction:column;will-change:transform} /* moved by TestimonialsSplit.tsx (auto-drift + drag/swipe) */
 .tgroup{display:flex;flex-direction:column;gap:14px;padding-bottom:14px}
-@keyframes tup{from{transform:translateY(0)}to{transform:translateY(-50%)}}
 .tm.hl{background:var(--brand);color:#fff;border-color:var(--brand)}
 .tm.hl .q{color:#fff}.tm.hl .av{background:#fff;color:var(--brand)}.tm.hl .who small{color:rgba(255,255,255,.85)}
 .tm:first-child:not(.hl){background:#fff;color:var(--ink);border-color:var(--line)}
@@ -624,13 +681,12 @@ html body .hero{padding-bottom:16px;min-height:min(calc(100vh - 16px),780px)}
 .tmarq .tm:hover{transform:scale(1.015);box-shadow:0 14px 34px rgba(21,21,21,.12)}
 @media (max-width:899px){
   .tsplit{grid-template-columns:1fr;gap:22px}
-  .tmarq{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
-  .ttrack{animation:none}
+  .tmarq{height:auto;overflow:visible;cursor:auto;touch-action:auto;-webkit-mask-image:none;mask-image:none}
   .tgroup[aria-hidden="true"]{display:none}
   .tgroup{padding-bottom:0}
 }
 /* reduced motion: no endless scroll — show the testimonials as a still list */
-@media (prefers-reduced-motion:reduce){.tmarq{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}.ttrack{animation:none}.tgroup[aria-hidden="true"]{display:none}.tgroup{padding-bottom:0}}
+@media (prefers-reduced-motion:reduce){.tmarq{height:auto;overflow:visible;cursor:auto;touch-action:auto;-webkit-mask-image:none;mask-image:none}.tgroup[aria-hidden="true"]{display:none}.tgroup{padding-bottom:0}}
 /* more air above Why Choose Us */
 section#why{margin-top:14px}
 .why-wrap{padding-top:52px}
@@ -644,24 +700,8 @@ html.stackmode section#why{margin-top:0;padding-top:96px;padding-bottom:36px}
 .slidenav button i{background:#fff}
 .slidenav button::before{content:"";position:absolute;inset:-12px -2px}
 
-/* ============ Why Choose Us: aerial plane + ship photo ============ */
-.why-grid{grid-template-columns:minmax(0,1fr) minmax(0,1.12fr);gap:clamp(22px,3.5vw,48px)}
-.whyphoto{position:relative;border-radius:var(--r-lg);overflow:hidden;aspect-ratio:778/640;background:#0c2530;box-shadow:0 24px 60px rgba(60,0,0,.35);border:1px solid rgba(255,255,255,.18)}
-.wp-img{position:absolute;inset:0;background-size:cover;background-position:50% 50%;transform:scale(1.06);transition:transform 2.4s var(--ease)}
-.whyphoto.in .wp-img{transform:scale(1)}
-.whyphoto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.18),transparent 40%,transparent 70%,rgba(0,20,28,.25));pointer-events:none}
-.whyphoto .vt{position:absolute;z-index:2;left:3.2%;top:50%;writing-mode:vertical-rl;transform:translateY(-50%) rotate(180deg);font-weight:600;text-transform:uppercase;letter-spacing:.06em;font-size:clamp(19px,2.3vw,32px);line-height:1;color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.55);white-space:nowrap}
-.whyphoto .pin{position:absolute;z-index:2;left:60%;top:var(--y);transform:translateY(-50%);display:flex;align-items:center}
-.whyphoto .pin::before{content:"";position:absolute;right:100%;top:50%;width:clamp(30px,8.5vw,100px);height:0;border-top:1.5px dashed rgba(255,255,255,.75)}
-.whyphoto .pin i{font-style:normal;font-size:13px;font-weight:600;letter-spacing:.04em;min-width:42px;height:42px;display:grid;place-items:center;border-radius:50%;background:rgba(255,255,255,.96);color:var(--brand-text);box-shadow:0 8px 22px rgba(0,0,0,.35);transition:transform .35s var(--ease),background .3s,color .3s}
-.whyphoto .pin.on i{transform:scale(1.25);background:var(--brand);color:#fff;box-shadow:0 0 0 6px rgba(227,30,36,.35),0 8px 22px rgba(0,0,0,.4)}
-ul.why li{transition:background .3s}
-ul.why li.hot{background:rgba(255,255,255,.14)}
-@media (prefers-reduced-motion:no-preference){
-  .whyphoto .pin i{animation:pinp 3.2s ease-in-out infinite;animation-delay:calc(var(--y)*.04s)}
-  @keyframes pinp{0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.35),0 0 0 0 rgba(255,255,255,.5)}50%{box-shadow:0 8px 22px rgba(0,0,0,.35),0 0 0 9px rgba(255,255,255,0)}}
-}
-@media (max-width:899px){.why-grid{grid-template-columns:minmax(0,1fr)!important}.whyphoto{order:2}.whyphoto .vt{font-size:clamp(20px,6vw,30px)}.whyphoto .pin i{min-width:34px;height:34px;font-size:11.5px}}
+/* ============ Why Choose Us: heading on top, feature cards below ============ */
+.why-grid{display:flex;flex-direction:column;align-items:stretch;gap:clamp(26px,4vw,52px)}
 
 /* service cards with photos */
 .svc .pic{height:172px}
@@ -681,6 +721,9 @@ ul.why li.hot{background:rgba(255,255,255,.14)}
    so content can still grow on very short screens instead of being clipped. */
 :root{--fit-gap:34px}
 .frame{max-width:none}
+/* full width: no side gap between the window edge and the page content (top/bottom spacing stays, so --fit-gap is unchanged) */
+.frame{padding-left:0;padding-right:0}
+.shell{padding-left:0;padding-right:0;border-left:0;border-right:0;border-radius:0}
 html,body{overflow-x:clip} /* off-screen reveal animations must never cause sideways scroll */
 html body .hero,html.stackmode .hero.stack{min-height:calc(100vh - var(--fit-gap));min-height:calc(100svh - var(--fit-gap))}
 .hero-copy .big{font-size:clamp(26px,min(4.7vw,8vh),62px)} /* shrink on short, wide windows */
