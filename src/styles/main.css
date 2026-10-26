@@ -23,6 +23,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter Tight','Helvetica
 img{max-width:100%;display:block}
 a{color:inherit;text-decoration:none}
 button,input,select{font:inherit;color:inherit}
+/* cursor baseline: anything clickable shows the hand, disabled controls show not-allowed (components can still override, e.g. wait/grab) */
+button:not(:disabled),summary,select,input[type=file],input[type=checkbox],input[type=radio],input[type=submit]{cursor:pointer}
+button:disabled{cursor:not-allowed}
+input[type=file]::file-selector-button{cursor:pointer}
 ul{list-style:none}
 :focus-visible{outline:3px solid var(--brand);outline-offset:3px;border-radius:8px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -181,6 +185,10 @@ table.hist td{padding:14px;color:var(--muted)}
 #services .more{color:#ff7a7e;align-self:flex-end;margin-top:6px} /* bottom-right of the card */
 .more .i{transition:transform .25s}
 .svc:hover .more .i{transform:translate(3px,-3px)}
+/* the whole service card is the link (it lifts and zooms on hover like one): stretch Explore More over it */
+.svc .more::after{content:"";position:absolute;inset:0;z-index:4;border-radius:inherit}
+.svc .more:focus-visible{outline:none}
+.svc:has(.more:focus-visible){outline:3px solid #ff7a7e;outline-offset:3px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;align-items:center}
 .chips span{color:var(--muted);font-size:12.5px;margin-right:4px}
 #services .chips span{color:#9a9da2}
@@ -583,6 +591,9 @@ html.stackmode .hero .hero-bg{transform:translateY(calc(var(--p)*7%)) scale(calc
 header.top .pill{transition:background .45s var(--ease),border-color .45s,box-shadow .45s,backdrop-filter .45s,-webkit-backdrop-filter .45s}
 header.top:not(.solid) .pill{background:transparent;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 header.top:not(.solid) nav.main .nl{text-shadow:0 1px 14px rgba(0,10,20,.5)}
+/* once scrolled: a fade band behind the header — page content blurs and dims as it slides under, instead of showing sharp between the pills */
+header.top::before{content:"";position:absolute;z-index:-1;left:-24px;right:-24px;top:-20px;bottom:-34px;pointer-events:none;background:linear-gradient(180deg,rgba(21,21,21,.55),rgba(21,21,21,.28) 55%,rgba(21,21,21,0));-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);-webkit-mask-image:linear-gradient(180deg,#000 45%,transparent);mask-image:linear-gradient(180deg,#000 45%,transparent);opacity:0;transition:opacity .45s var(--ease)}
+header.top.solid::before{opacity:1}
 
 /* winged logo */
 .logo img{height:auto}
