@@ -1,13 +1,7 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import { Icon } from '../ui/Icon';
-import { Link } from 'react-router';
 import { HashLink } from '../ui/HashLink';
-import { serviceBySlug } from '../../data/services';
 import type { Heading } from '../ui/Heading';
-import { branches } from '../../data/company';
-
-/** Hero proof points — same figures as the About stats (AboutSection) and the Our Branches list. */
-const PROOF = ['850+ daily shipments', '99.8% on-time delivery', `${branches.length} branches across the UAE & India`];
 
 const SLIDES: { img: string; label: string; slug: string; title: Heading }[] = [
   // title: the service page's hero title without the place name (the service pages keep theirs)
@@ -34,7 +28,6 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
   const [cycle, setCycle] = useState(0);
   const timer = useRef(0);
   const trkRef = useRef<HTMLInputElement>(null);
-  const slide = serviceBySlug(SLIDES[cur].slug)!;
 
   const go = (i: number) => {
     setCur((i + SLIDES.length) % SLIDES.length);
@@ -90,27 +83,14 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
         <h1>
           <span className="kicker">Transportation across the GCC and worldwide</span>
         </h1>
-        {/* per-slide content = that service page's own hero title + lead (data/services.ts). Keyed by slide so it
-            re-runs the entrance animation on every change; not a live region, so screen readers aren't interrupted. */}
+        {/* per-slide content: just the title (kept brief on purpose — the hero is for scanning).
+            Keyed by slide so it re-runs the entrance animation; not a live region, so screen readers aren't interrupted. */}
         <div className="hero-slide" key={cur}>
           <div className="big hero-title" role="heading" aria-level={2}>
             {SLIDES[cur].title[0]}
             <em>{SLIDES[cur].title[1]}</em>
           </div>
-          <p>{slide.lead}</p>
-          <Link className="hero-more" to={`/${slide.slug}`}>
-            Explore {slide.name} <Icon name="arrow" />
-          </Link>
         </div>
-        {/* why: proof points already stated on the site (About stats, Our Branches) */}
-        <ul className="hero-proof" aria-label="Why MAS Express Cargo">
-          {PROOF.map((p) => (
-            <li key={p}>
-              <Icon name="check" />
-              {p}
-            </li>
-          ))}
-        </ul>
       </div>
 
       <div className="slidenav" role="tablist" aria-label="Our services">
@@ -152,10 +132,6 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
               Track <Icon name="arrow" />
             </button>
           </div>
-          <p className="small">
-            Access your shipment's real-time status, location, and documents through our integrated MAS Express Cargo
-            Tracking System.
-          </p>
         </form>
 
         <div className="card callcard">

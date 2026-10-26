@@ -964,12 +964,7 @@ h2.big{font-size:var(--fs-h2);font-weight:400;letter-spacing:-.015em;line-height
 
 /* ---------- hero: headline → one-line promise → primary + secondary action ---------- */
 .hero .hero-copy p{font-size:var(--fs-lead);max-width:580px;line-height:1.55}
-/* hero above the fold: what (headline) → who (tagline) → why (proof row) → next ("Get started" cards) */
-.hero-proof{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;margin:var(--sp-3) 0 0;padding:0;list-style:none}
-.hero-proof li{display:inline-flex;align-items:center;gap:8px;height:38px;padding:0 16px 0 12px;border-radius:999px;background:rgba(10,20,30,.38);border:1px solid rgba(255,255,255,.22);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);color:#fff;font-size:14px;font-weight:500}
-.hero-proof .i{width:18px;height:18px;padding:3px;border-radius:50%;background:var(--brand);color:#fff;stroke-width:3;flex:none}
-@media (prefers-reduced-motion:no-preference){.js .hero-proof{opacity:0;animation:rise .95s var(--ease) .65s forwards}}
-@media (max-width:620px){.hero-proof{gap:6px;margin-top:var(--sp-2)}.hero-proof li{height:32px;padding:0 12px 0 9px;font-size:12.5px}.hero-proof .i{width:16px;height:16px}}
+/* hero above the fold: headline → "Get started" cards */
 .bento-lab{grid-column:1/-1;margin:0 0 2px 4px;font-size:var(--fs-xs);font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:#fff;text-shadow:0 1px 10px rgba(0,10,20,.6);display:flex;align-items:center;gap:10px}
 .bento-lab::before{content:"";width:22px;height:3px;border-radius:3px;background:var(--brand)}
 .hero .pickcard strong{font-size:18px;font-weight:600}
@@ -991,26 +986,11 @@ h2.big{font-size:var(--fs-h2);font-weight:400;letter-spacing:-.015em;line-height
 /* footer email: wraps at the @ (see Footer.tsx) instead of mid-word */
 footer .fcontact li>a{overflow-wrap:normal}
 
-/* ---------- hero slides: each slide shows its service's own title + lead (HeroSection.tsx) ---------- */
+/* ---------- hero slides: each slide shows its own short title (HeroSection.tsx) ---------- */
 .hero .hero-copy .hero-title{font-weight:600;text-transform:uppercase;color:#fff;line-height:1.05;letter-spacing:-.005em;max-width:900px;margin:0 auto;text-shadow:0 2px 24px rgba(0,10,20,.55)}
 .hero-copy .hero-title{font-size:clamp(26px,min(4vw,7vh),54px)}
 .hero-copy .hero-title em{-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .hero-copy .kicker{font-size:13px;font-weight:500}
-.hero-more{display:inline-flex;align-items:center;gap:8px;margin-top:var(--sp-2);padding:2px 0;color:#fff;font-size:15px;font-weight:600;border-bottom:2px solid var(--brand);text-shadow:0 1px 12px rgba(0,10,20,.6)}
-.hero-more .i{transition:transform .25s var(--ease)}
-.hero-more:hover .i{transform:translate(3px,-3px)}
-.hero-more:focus-visible{outline:3px solid #fff;outline-offset:4px;border-radius:4px}
-/* reserve room for the longest slide so the proof chips and cards below don't jump between slides */
-.hero-slide{min-height:clamp(222px,29vh,262px)}
-@media (max-width:620px){
-  .hero-slide{min-height:240px}
-  .hero .slidenav{padding-top:14px} /* breathing room between the proof line and the slide dots */
-  /* phones: proof points as one compact line (pills stacked 3 rows deep and ran into the slide dots) */
-  .hero-proof{gap:2px 0;margin-top:10px}
-  .hero-proof li{height:auto;padding:0;background:none;border:0;-webkit-backdrop-filter:none;backdrop-filter:none;font-size:12.5px;text-shadow:0 1px 10px rgba(0,10,20,.7)}
-  .hero-proof li+li::before{content:"·";margin:0 8px;opacity:.7}
-  .hero-proof .i{display:none}
-}
-@media (prefers-reduced-motion:no-preference){
-  .js .hero-more{opacity:0;animation:rise .95s var(--ease) .6s forwards}
-}
+/* reserve room for the longest title (2 lines) so nothing below jumps between slides */
+.hero-slide{min-height:116px}
+@media (max-width:620px){.hero-slide{min-height:88px}}
