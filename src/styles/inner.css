@@ -268,6 +268,11 @@ a.fc{display:block}
 .jm-route.on .jm-leader{stroke:var(--brand);stroke-width:1.6}
 .jm-route.on .jm-dot{transform:scale(1.8);fill:#fff;stroke:var(--brand)}
 .jm-route.on .jm-label{fill:#ff6b70}
+/* second hub (India): its routes are finer and dotted so the Dubai routes stay the main read; both light up together */
+.jm-arc.in{stroke:rgba(255,255,255,.1);stroke-width:1;stroke-dasharray:2 4}
+.jm-route.on .jm-arc.in{stroke:#ff9a9d;stroke-width:1.6}
+.jm-mover.in{fill:#ffd2d3;filter:drop-shadow(0 0 3px #E31E24)}
+.jm-hub.sm text{font-size:11.5px}
 .jm-list{display:none}
 .jm-hub circle{fill:var(--brand)}
 .jm-hub .pulse{fill:none;stroke:var(--brand);stroke-width:2}
@@ -281,6 +286,11 @@ a.fc{display:block}
 .jr-stat.s2{right:-14px;top:22px;animation-delay:-2.5s;border:1px solid var(--line)}
 .jr-copy .para{margin-bottom:6px}
 .jr-copy .feat{margin:18px 0 0}
+/* the two pillars as side-by-side upright boxes, icon on top, text at the bottom (as on the home About section) */
+.jr-copy .feat{grid-template-columns:1fr 1fr;gap:12px}
+.jr-copy .feat>div{flex-direction:column;justify-content:space-between;gap:28px;min-height:200px;padding:18px}
+.jr-copy .feat h3{margin-bottom:6px}
+@media (max-width:420px){.jr-copy .feat{grid-template-columns:minmax(0,1fr)}.jr-copy .feat>div{min-height:0;gap:16px}}
 
 /* ===== About: vision / mission / values ===== */
 .vmv{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;padding:12px;border-radius:var(--r-lg);background:var(--ink)}
@@ -316,3 +326,31 @@ a.fc{display:block}
   .jr-stat.s1,.jr-stat.s2{inset:auto}
 }
 @media (prefers-reduced-motion:reduce){.jm-sweep,.jm-mover{display:none}.js .inner .jr-media .jm-route{opacity:1;transition:none}.jr-stat{animation:none}.vmv-item,.vmv-item::before,.vmv-item::after{transition:none}}
+
+/* ============ Delivery Options (components/service/DeliveryOptions.tsx) — every service page ============ */
+.dopt-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.dopt{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px;transition:transform .3s var(--ease),border-color .3s,box-shadow .3s}
+.dopt:hover{transform:translateY(-4px);border-color:rgba(227,30,36,.45);box-shadow:0 18px 40px rgba(21,21,21,.09)}
+.dopt h3{font-size:17px;font-weight:500;margin:18px 0 6px}
+.dopt p{color:var(--muted);font-size:13.5px}
+.dopt .best{margin-top:auto;padding-top:12px;border-top:1px solid var(--line);color:var(--text);font-size:13px}
+.dopt p:not(.best){margin-bottom:14px}
+.dopt .best b{color:var(--brand-text);font-weight:600}
+/* route graphic: pickup point → dashed line with a travelling parcel → hand-over point */
+.dopt-route{display:flex;align-items:flex-start;gap:8px;padding:14px;border-radius:var(--r-sm);background:var(--paper)}
+.dopt-route .end{display:flex;flex-direction:column;align-items:center;gap:6px;flex:none;width:84px;text-align:center}
+.dopt-route .ic{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:#fff;color:var(--ink);border:1px solid var(--line)}
+.dopt-route .ic.to{background:var(--brand);color:#fff;border-color:var(--brand)}
+.dopt-route .ic .i{width:19px;height:19px}
+.dopt-route small{font-size:11px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);line-height:1.25}
+.dopt-route .line{position:relative;flex:1;height:2px;margin-top:19px;background:repeating-linear-gradient(90deg,rgba(21,21,21,.28) 0 6px,transparent 6px 11px)}
+.dopt-route .line i{position:absolute;top:50%;left:0;width:9px;height:9px;margin:-4.5px 0 0 -4.5px;border-radius:50%;background:var(--brand);box-shadow:0 0 0 4px rgba(227,30,36,.18);animation:doptGo 2.6s var(--ease) infinite}
+@keyframes doptGo{0%{left:0;opacity:0}12%{opacity:1}88%{opacity:1}100%{left:100%;opacity:0}}
+.dopt-grid.n3 .dopt:last-child{grid-column:1/-1} /* 3 options: the third spans the row */
+@media (max-width:700px){.dopt-grid{grid-template-columns:minmax(0,1fr)}}
+@media (prefers-reduced-motion:reduce){.dopt-route .line i{animation:none;left:50%}.dopt:hover{transform:none}}
+.dopt-more{align-self:flex-end;margin-top:12px}
+.dopt-more::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.dopt-more:focus-visible{outline:none}
+.dopt:has(.dopt-more:focus-visible){outline:3px solid var(--brand);outline-offset:3px}
+.dopt:hover .dopt-more .i{transform:translate(3px,-3px)}

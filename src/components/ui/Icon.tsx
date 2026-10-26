@@ -5,6 +5,7 @@ export type IconName =
   | 'arrow'
   | 'check'
   | 'calendar'
+  | 'door'
   | 'plus'
   | 'chev'
   | 'menu'

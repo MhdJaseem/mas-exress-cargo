@@ -4,6 +4,7 @@ import { HashLink } from '../components/ui/HashLink';
 import { PageHero } from '../components/ui/PageHero';
 import { PickupForm } from '../components/ui/PickupForm';
 import { ServiceBlock } from '../components/service/ServiceBlocks';
+import { DeliveryOptions } from '../components/service/DeliveryOptions';
 import { services, type Service } from '../data/services';
 import { CONTACT, enquireHref, pageTitle } from '../lib/site';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
@@ -35,8 +36,13 @@ export default function ServicePage({ service: s }: { service: Service }) {
 
       <div className="pbody">
         <div className="main-col">
-          {s.blocks.map((b, i) => (
+          {s.blocks.slice(0, 1).map((b, i) => (
             <ServiceBlock key={i} block={b} />
+          ))}
+          {/* right after the intro: the delivery options this service offers */}
+          <DeliveryOptions only={s.delivery} />
+          {s.blocks.slice(1).map((b, i) => (
+            <ServiceBlock key={i + 1} block={b} />
           ))}
         </div>
 

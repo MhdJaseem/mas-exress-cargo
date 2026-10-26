@@ -10,6 +10,11 @@ export function IconSprite() {
         <symbol id="check" viewBox="0 0 24 24">
           <path d="M20 6 9 17l-5-5" />
         </symbol>
+        <symbol id="door" viewBox="0 0 24 24">
+          <path d="M3 10.5 12 3l9 7.5" />
+          <path d="M5 9v12h14V9" />
+          <path d="M10 21v-6h4v6" />
+        </symbol>
         <symbol id="calendar" viewBox="0 0 24 24">
           <rect x="3" y="5" width="18" height="16" rx="2" />
           <path d="M3 10h18M8 3v4M16 3v4" />

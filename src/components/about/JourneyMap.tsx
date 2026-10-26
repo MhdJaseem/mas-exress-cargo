@@ -1,6 +1,7 @@
 import { useEffect, useState, type CSSProperties } from 'react';
 
 /* "From Dubai to the world" route map for the About page (.jr-map, styles in inner.css).
+   Two hubs: Dubai (the map's centre) and India (at its own pin) — every destination has a route from each.
 
    An azimuthal projection centred on Dubai: each pin sits at its true compass bearing from Dubai, and its
    distance from the centre grows with the square root of the real distance (so the nearby Middle East and
@@ -97,20 +98,41 @@ for (const right of [true, false]) {
   side.forEach((b, j) => Object.assign(b, { right, ly: ys[j] }));
 }
 
-const points = base.map((p) => {
-  const [x, y] = polar(R * Math.sqrt(p.km / MAX_KM), p.bearing);
-  // gently curved route: control point pushed sideways from the midpoint
-  const len = Math.hypot(x - CX, y - CY);
-  const k = 0.14 * len;
-  const [mx, my] = [(CX + x) / 2, (CY + y) / 2];
-  const [nx, ny] = [-(y - CY) / len, (x - CX) / len];
-  const route = `M${CX} ${CY} Q${(mx + nx * k).toFixed(1)} ${(my + ny * k).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`;
+/** Gently curved route from (x1,y1) to (x2,y2): control point pushed sideways from the midpoint by bend × length. */
+function curve(x1: number, y1: number, x2: number, y2: number, bend: number) {
+  const len = Math.hypot(x2 - x1, y2 - y1) || 1;
+  const k = bend * len;
+  const [mx, my] = [(x1 + x2) / 2, (y1 + y2) / 2];
+  const [nx, ny] = [-(y2 - y1) / len, (x2 - x1) / len];
+  return `M${x1.toFixed(1)} ${y1.toFixed(1)} Q${(mx + nx * k).toFixed(1)} ${(my + ny * k).toFixed(1)} ${x2.toFixed(1)} ${y2.toFixed(1)}`;
+}
+
+const pinXY = base.map((p) => polar(R * Math.sqrt(p.km / MAX_KM), p.bearing));
+/** Second hub: sits on the India pin. */
+const INDIA = base.findIndex((p) => p.name === 'India');
+const [IX, IY] = pinXY[INDIA];
+
+const points = base.map((p, i) => {
+  const [x, y] = pinXY[i];
+  const route = curve(CX, CY, x, y, 0.14);
+  // from India, bending the other way so the two route sets stay apart; none to India itself
+  const inRoute = i === INDIA ? null : curve(IX, IY, x, y, -0.16);
   // leader: pin -> edge of the map in the pin's direction -> across to the label in its column
   const [ex, ey] = polar(R + 3, p.bearing);
   const lx = p.right ? CX + COL : CX - COL;
   const tx = p.right ? lx + 6 : lx - 6;
   const leader = `M${x.toFixed(1)} ${y.toFixed(1)} L${ex.toFixed(1)} ${ey.toFixed(1)} L${lx.toFixed(1)} ${p.ly.toFixed(1)}`;
-  return { ...p, x, y, route, leader, lx: tx, ty: p.ly + 4.5, anchor: p.right ? ('start' as const) : ('end' as const) };
+  return {
+    ...p,
+    x,
+    y,
+    route,
+    inRoute,
+    leader,
+    lx: tx,
+    ty: p.ly + 4.5,
+    anchor: p.right ? ('start' as const) : ('end' as const),
+  };
 });
 
 const RINGS = [1000, 4000, 9000, MAX_KM].map((km) => R * Math.sqrt(km / MAX_KM));
@@ -135,7 +157,7 @@ export function JourneyMap() {
         className="jr-map-svg"
         viewBox={`0 0 ${W} ${H}`}
         role="img"
-        aria-label={`Route map: MAS Express Cargo ships from Dubai to ${DESTINATIONS.map((d) => d.name).join(', ')}`}
+        aria-label={`Route map: MAS Express Cargo ships from Dubai and India to ${DESTINATIONS.map((d) => d.name).join(', ')}`}
         onMouseLeave={() => setHover(null)}
       >
         <defs>
@@ -178,6 +200,7 @@ export function JourneyMap() {
             style={{ '--k': i } as CSSProperties}
             onMouseEnter={() => setHover(i)}
           >
+            {p.inRoute && <path className="jm-arc in" d={p.inRoute} />}
             <path className="jm-arc" d={p.route} />
             <path className="jm-dash route" d={p.route} />
             <path className="jm-leader" d={p.leader} />
@@ -192,12 +215,41 @@ export function JourneyMap() {
                 repeatCount="indefinite"
               />
             </circle>
+            {p.inRoute && (
+              <circle className="jm-mover in" r="2.2">
+                <animateMotion
+                  dur="4.2s"
+                  begin={`${(i * 0.29 + 1.4).toFixed(2)}s`}
+                  repeatCount="indefinite"
+                  path={p.inRoute}
+                />
+                <animate
+                  attributeName="opacity"
+                  values="0;1;1;0"
+                  keyTimes="0;.1;.85;1"
+                  dur="4.2s"
+                  begin={`${(i * 0.29 + 1.4).toFixed(2)}s`}
+                  repeatCount="indefinite"
+                />
+              </circle>
+            )}
             <circle className="jm-dot" cx={p.x} cy={p.y} r="3.6" />
             <text className="jm-label" x={p.lx} y={p.ty} textAnchor={p.anchor}>
               {p.name}
             </text>
           </g>
         ))}
+
+        {/* India hub (label above the pin, clear of the Dubai label below the centre) */}
+        <g className="jm-hub sm">
+          <circle className="pulse" cx={IX} cy={IY} r="11" />
+          <circle className="pulse p2" cx={IX} cy={IY} r="11" />
+          <circle cx={IX} cy={IY} r="6" />
+          <rect x={IX - 27} y={IY - 34} width="54" height="20" rx="10" />
+          <text x={IX} y={IY - 20} textAnchor="middle">
+            India
+          </text>
+        </g>
 
         {/* Dubai hub */}
         <g className="jm-hub">

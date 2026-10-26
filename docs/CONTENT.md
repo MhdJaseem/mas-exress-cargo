@@ -58,3 +58,8 @@ On 2026-10-21 the five service pages were updated to the **exact wording** of th
 ## Request Pickup form fields
 
 Phone (country code select + number) · Shipment Mode (Air Freight / Sea Freight / Land Transport) · Pickup Date · Pickup Time.
+
+## New copy (not from the live site)
+
+- **Delivery Options** (service pages, after the intro; data `DELIVERY_OPTIONS` in `src/data/services.ts`, each service picks its options in its `delivery` field): Door to Door, Door to Port, Port to Port, Airport to Airport. Option names supplied by the client on 2026-10-26; the heading, lead, descriptions and "Best for" lines were drafted by us at the client's request and should be reviewed by the client.
+- **Delivery option pages** `/door-to-door`, `/door-to-port`, `/port-to-port`, `/airport-to-airport` (entries with `group: 'delivery'` at the end of `services` in `src/data/services.ts`): hero title, lead, intro, benefit cards, process steps and FAQ all drafted by us on 2026-10-26 for client review. No statistics were invented; specifics reused from existing pages (DXB/DWC, Jebel Ali, IATA certified, MAS tracking). Photos reuse existing hero/card images until dedicated ones are supplied.

@@ -74,6 +74,7 @@ li.open>.dd{opacity:1;visibility:visible;transform:none}
 .dd a{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:11px;font-size:14.5px}
 .dd a:hover{background:var(--brand-tint);color:var(--brand-text)}
 .dd a .i{color:var(--brand)}
+.dd-label{display:block;margin:6px 12px 2px;padding-top:10px;border-top:1px solid var(--line);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
 .actions{display:flex;gap:10px}
 .actions .btn{height:52px}
 .actions .btn-sq{width:52px}
@@ -109,23 +110,44 @@ li.open>.dd{opacity:1;visibility:visible;transform:none}
 /* ---------- tracking result ---------- */
 #tracking{display:none;padding:40px 24px 0}
 #tracking.show{display:block}
-.tbox{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px}
-.tbox h2{font-size:24px;margin-bottom:18px}
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
-.tgrid>div{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:18px}
-.tgrid h3{font-size:16px;font-weight:500;margin-bottom:14px}
-.tgrid dl{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:13.5px}
-.tgrid dt{color:var(--muted)}
-.steps{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin:14px 0 22px}
-.steps li{position:relative;padding-top:28px;font-size:12.5px;color:var(--muted);text-align:center}
-.steps li::before{content:"";position:absolute;top:6px;left:50%;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:#fff;border:2px solid #b9b7b2}
-.steps li::after{content:"";position:absolute;top:11px;left:calc(50% + 12px);right:calc(-50% + 12px);height:2px;background:#d6d3cd}
-.steps li:last-child::after{display:none}
+/* tracking result: header + badges, step tracker, summary/details cards, history table */
+.tbox{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(18px,3vw,34px)}
+.tb-head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:16px 24px;margin-bottom:28px}
+.tb-badges{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.tb-no{display:flex;flex-direction:column;gap:2px;background:var(--ink);color:#fff;border-radius:var(--r-sm);padding:9px 16px}
+.tb-no small{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.6)}
+.tb-no b{font-size:16px;font-weight:600;letter-spacing:.03em;overflow-wrap:anywhere}
+.tb-status{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 16px;border-radius:999px;background:#fff;border:1px solid var(--line);font-size:13.5px;font-weight:500;color:var(--muted)}
+.tb-status i{width:8px;height:8px;border-radius:50%;background:#b9b7b2}
+.tb-status.live{color:var(--brand-text);background:var(--brand-tint);border-color:transparent}
+.tb-status.live i{background:var(--brand);box-shadow:0 0 0 4px rgba(227,30,36,.18)}
+/* step tracker: grey track between the first and last dot, red fill up to the current stage (--fill 0..1) */
+.steps{position:relative;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));margin:0 0 26px;padding:22px 10px;list-style:none;background:#fff;border:1px solid var(--line);border-radius:var(--r-md)}
+.steps::before,.steps::after{content:"";position:absolute;top:42px;height:3px;border-radius:3px;left:calc(10px + (100% - 20px) / 12)}
+.steps::before{right:calc(10px + (100% - 20px) / 12);background:#e4e1dc}
+.steps::after{width:calc((100% - 20px) * 5 / 6 * var(--fill,0));background:var(--brand);transition:width .8s var(--ease)}
+.steps li{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;font-size:12.5px;color:var(--muted);padding:0 4px}
+.steps .dot{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:#fff;border:2px solid #d6d3cd;font-size:12px;font-weight:600;color:var(--muted);transition:background .3s,border-color .3s,color .3s}
+.steps .dot .i{width:18px;height:18px;stroke-width:2.6}
 .steps li.done{color:var(--ink);font-weight:500}
-.steps li.done::before{background:var(--brand);border-color:var(--brand)}
-table.hist{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff;border-radius:var(--r-sm);overflow:hidden}
-table.hist th{text-align:left;font-weight:500;color:#fff;background:var(--ink);padding:12px 14px}
-table.hist td{padding:14px;color:var(--muted)}
+.steps li.done .dot{background:var(--brand);border-color:var(--brand);color:#fff}
+.steps li.cur .dot{box-shadow:0 0 0 6px rgba(227,30,36,.16)}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+.tgrid>div,.hist-card{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:20px}
+.tgrid h3,.hist-card h3{display:flex;align-items:center;gap:12px;font-size:16.5px;font-weight:500;margin-bottom:12px}
+.tgrid h3 .ic,.hist-card h3 .ic{width:38px;height:38px;border-radius:11px;background:var(--brand-tint);color:var(--brand);display:grid;place-items:center;flex:none}
+.tgrid h3 .ic .i,.hist-card h3 .ic .i{width:18px;height:18px}
+.tgrid dl{display:grid;grid-template-columns:auto 1fr;font-size:14px}
+.tgrid dt,.tgrid dd{padding:10px 0;border-top:1px solid var(--line)}
+.tgrid dt{color:var(--muted);padding-right:16px}
+.tgrid dd{text-align:right;font-weight:500;color:var(--ink);overflow-wrap:anywhere}
+.hist-scroll{overflow-x:auto;border-radius:var(--r-sm);border:1px solid var(--line)}
+table.hist{width:100%;border-collapse:collapse;font-size:13.5px;background:#fff}
+table.hist th{text-align:left;font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:var(--ink);padding:13px 16px}
+table.hist td{padding:14px 16px;color:var(--text);border-top:1px solid var(--line)}
+table.hist tbody tr:nth-child(even) td{background:var(--paper)}
+table.hist td.empty{text-align:center;color:var(--muted);padding:30px 16px}
+table.hist td.empty .i{display:block;width:26px;height:26px;margin:0 auto 8px;color:#c4c1bb}
 .note{font-size:14px;color:var(--muted);margin-top:14px}
 
 /* ---------- about ---------- */
@@ -466,8 +488,12 @@ footer .fcontact .fic .i{width:16px;height:16px}
   .about{gap:26px}
   .about-img{min-height:320px}
   .tgrid{grid-template-columns:1fr}
-  .steps{grid-template-columns:repeat(3,1fr);row-gap:22px}
-  .steps li::after{display:none}
+  /* phones: vertical step tracker */
+  .steps{grid-template-columns:minmax(0,1fr);row-gap:14px;padding:18px 16px}
+  .steps::before,.steps::after{top:38px;left:35px;width:3px;height:auto}
+  .steps::before{right:auto;bottom:38px}
+  .steps::after{height:calc((100% - 76px) * var(--fill,0));bottom:auto;transition:height .8s var(--ease)}
+  .steps li{flex-direction:row;text-align:left;gap:14px;font-size:13.5px}
   .tgrid2{grid-template-columns:1fr}
   .why-wrap{padding:32px 16px}
 }

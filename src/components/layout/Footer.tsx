@@ -8,7 +8,13 @@ export function Socials() {
   return (
     <div className="socials">
       {SOCIALS.map((s) => (
-        <a key={s.href} href={s.href} aria-label={s.label}>
+        <a
+          key={s.href}
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`${s.label} (opens in a new tab)`}
+        >
           <Icon name={s.icon} />
         </a>
       ))}

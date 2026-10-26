@@ -163,12 +163,23 @@ export function Header() {
             'Services',
             active.services,
             <>
-              {services.map((s) => (
-                <Link key={s.slug} to={`/${s.slug}`}>
-                  <Icon name={s.icon} />
-                  {s.name}
-                </Link>
-              ))}
+              {services
+                .filter((s) => !s.group)
+                .map((s) => (
+                  <Link key={s.slug} to={`/${s.slug}`}>
+                    <Icon name={s.icon} />
+                    {s.name}
+                  </Link>
+                ))}
+              <span className="dd-label">Delivery Options</span>
+              {services
+                .filter((s) => s.group === 'delivery')
+                .map((s) => (
+                  <Link key={s.slug} to={`/${s.slug}`}>
+                    <Icon name={s.icon} />
+                    {s.name}
+                  </Link>
+                ))}
             </>,
           )}
           {dd(

@@ -4,7 +4,7 @@ Guidance for Claude Code working in this repo. Read `docs/` for detail.
 
 ## What this is
 
-Marketing site for MAS Express Cargo L.L.C (Sharjah, UAE). **React 19 + TypeScript + React Router 7**, built with **Vite 7** as a single-page app. Red + white brand taken from the company logo. Routes: `/` · `/air-freight` `/sea-freight` `/gcc-road-transport` `/warehousing` `/customs-clearance` · `/solution/e-commerce-fulfillment` `/solution/cold-chain-logistics` `/solution/heavy-lift-project-cargo` `/solution/retail-distribution` · `/about` `/our-team` `/our-branches` `/careers` · `*` (404). Old `*.html` URLs redirect to these.
+Marketing site for MAS Express Cargo L.L.C (Sharjah, UAE). **React 19 + TypeScript + React Router 7**, built with **Vite 7** as a single-page app. Red + white brand taken from the company logo. Routes: `/` · `/air-freight` `/sea-freight` `/gcc-road-transport` `/warehousing` `/customs-clearance` · `/door-to-door` `/door-to-port` `/port-to-port` `/airport-to-airport` · `/solution/e-commerce-fulfillment` `/solution/cold-chain-logistics` `/solution/heavy-lift-project-cargo` `/solution/retail-distribution` · `/about` `/our-team` `/our-branches` `/careers` · `*` (404). Old `*.html` URLs redirect to these.
 
 ## Layout
 
@@ -17,7 +17,7 @@ src/components/ui/         Icon, HashLink, PageHero, Heading/SectionHead, Pickup
 src/components/home/       the home page sections
 src/components/service/    ServiceBlocks (renders data/services.ts blocks)
 src/components/team/       TeamShowcase (animated member carousel on /our-team)
-src/pages/                 one component per route (ServicePage is the template for all five services, SolutionPage for the four solutions)
+src/pages/                 one component per route (ServicePage is the template for all nine service pages — five core services + four delivery options —, SolutionPage for the four solutions)
 src/data/                  services.ts (service pages), solutions.ts (solution pages), company.ts (testimonials, team, branches, clients)
 src/hooks/                 useHomeScroll (stacking cards + smooth scroll), useReveal, useDocumentMeta
 src/lib/                   api.ts (backend), site.ts (contact data), scroll.ts, activeSection.ts
