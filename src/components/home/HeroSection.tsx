@@ -1,11 +1,29 @@
 import { useEffect, useRef, useState, type CSSProperties, type FormEvent } from 'react';
 import { Icon } from '../ui/Icon';
+import { Link } from 'react-router';
 import { HashLink } from '../ui/HashLink';
+import { serviceBySlug } from '../../data/services';
+import type { Heading } from '../ui/Heading';
+import { branches } from '../../data/company';
 
-const SLIDES = [
-  { img: '/img/hero/hero-air.jpg', label: 'Air Freight' },
-  { img: '/img/hero/hero-sea.jpg', label: 'Sea Freight' },
-  { img: '/img/hero/hero-road-truck.webp', label: 'GCC Road Transport' },
+/** Hero proof points — same figures as the About stats (AboutSection) and the Our Branches list. */
+const PROOF = ['850+ daily shipments', '99.8% on-time delivery', `${branches.length} branches across the UAE & India`];
+
+const SLIDES: { img: string; label: string; slug: string; title: Heading }[] = [
+  // title: the service page's hero title without the place name (the service pages keep theirs)
+  {
+    img: '/img/hero/hero-air.jpg',
+    label: 'Air Freight',
+    slug: 'air-freight',
+    title: ['Expedited Global ', 'Air Cargo Solutions!'],
+  },
+  { img: '/img/hero/hero-sea.jpg', label: 'Sea Freight', slug: 'sea-freight', title: ['Reliable ', 'Sea Freight!'] },
+  {
+    img: '/img/hero/hero-road-truck.webp',
+    label: 'GCC Road Transport',
+    slug: 'gcc-road-transport',
+    title: ['Seamless Cross-Border ', 'Road Freight!'],
+  },
 ];
 const DUR = 6500;
 
@@ -16,6 +34,7 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
   const [cycle, setCycle] = useState(0);
   const timer = useRef(0);
   const trkRef = useRef<HTMLInputElement>(null);
+  const slide = serviceBySlug(SLIDES[cur].slug)!;
 
   const go = (i: number) => {
     setCur((i + SLIDES.length) % SLIDES.length);
@@ -67,15 +86,31 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
       </div>
       <div className="hero-top" aria-hidden="true" />
       <div className="hero-copy">
+        {/* fixed page heading; the slide below changes with the photo */}
         <h1>
-          <span className="kicker">Transportation across</span>
-          <span className="big">
-            the <em>GCC</em> and worldwide
-          </span>
+          <span className="kicker">Transportation across the GCC and worldwide</span>
         </h1>
-        <p>
-          MAS Express Cargo specializes in secure, reliable, and timely transportation across the GCC and worldwide.
-        </p>
+        {/* per-slide content = that service page's own hero title + lead (data/services.ts). Keyed by slide so it
+            re-runs the entrance animation on every change; not a live region, so screen readers aren't interrupted. */}
+        <div className="hero-slide" key={cur}>
+          <div className="big hero-title" role="heading" aria-level={2}>
+            {SLIDES[cur].title[0]}
+            <em>{SLIDES[cur].title[1]}</em>
+          </div>
+          <p>{slide.lead}</p>
+          <Link className="hero-more" to={`/${slide.slug}`}>
+            Explore {slide.name} <Icon name="arrow" />
+          </Link>
+        </div>
+        {/* why: proof points already stated on the site (About stats, Our Branches) */}
+        <ul className="hero-proof" aria-label="Why MAS Express Cargo">
+          {PROOF.map((p) => (
+            <li key={p}>
+              <Icon name="check" />
+              {p}
+            </li>
+          ))}
+        </ul>
       </div>
 
       <div className="slidenav" role="tablist" aria-label="Our services">
@@ -95,6 +130,8 @@ export function HeroSection({ onTrack }: { onTrack: (trackingNo: string) => void
         ))}
       </div>
       <div className="bento">
+        {/* what to do next: the three cards below are the page's first actions */}
+        <p className="bento-lab">Get started</p>
         <form className="card" id="hero-track" aria-label="Track Your Shipment" noValidate onSubmit={submit}>
           <h3>Track Your Shipment</h3>
           <div className="track">

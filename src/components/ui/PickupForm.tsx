@@ -3,6 +3,7 @@ import { submitPickup } from '../../lib/api';
 import { Icon } from './Icon';
 import { Select } from './Select';
 import { DatePicker } from './DatePicker';
+import { branches } from '../../data/company';
 
 export const SHIPMENT_MODES = ['Air Freight', 'Sea Freight', 'Land Transport'] as const;
 export type ShipmentMode = (typeof SHIPMENT_MODES)[number];
@@ -31,6 +32,11 @@ const COUNTRY_CODES = [
   '🇸🇬 Singapore (+65)',
 ];
 
+/** Branches from the Our Branches page except the head office (`main`), shown as e.g. "Deira, Dubai" / "Delhi Office, India". */
+const BRANCHES = branches.filter((b) => !b.main).map((b) => b.name);
+const REGION = new Map(branches.map((b) => [b.name, b.region.replace(/, UAE$/, '')]));
+const fmtBranch = (v: string) => `${v}, ${REGION.get(v)}`;
+
 /** Pickup time slots every 30 minutes, stored as hh:mm (24h) and shown as e.g. "9:30 AM". */
 const TIME_SLOTS = Array.from(
   { length: 48 },
@@ -43,6 +49,7 @@ const fmtTime = (v: string) => {
 
 /** Request Pickup form (home page and service-page sidebar). Only one per page — ids are fixed. */
 export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | '' }) {
+  const [br, setBr] = useState('');
   const [cc, setCc] = useState(COUNTRY_CODES[0]);
   const [n, setN] = useState('');
   const [m, setM] = useState<string>(defaultMode);
@@ -52,8 +59,8 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = { cc, n: n.trim(), m, d, t };
-    if (!f.n || !f.m || !f.d || !f.t) {
+    const f = { b: fmtBranch(br), cc, n: n.trim(), m, d, t };
+    if (!br || !f.n || !f.m || !f.d || !f.t) {
       setMsg('Please fill in all fields so we can confirm your pickup.');
       return;
     }
@@ -62,6 +69,17 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
 
   return (
     <form className="pf" id="pickupForm" noValidate onSubmit={submit}>
+      <div className="fld full">
+        <label htmlFor="pbranch">Branch</label>
+        <Select
+          id="pbranch"
+          value={br}
+          options={BRANCHES}
+          onChange={setBr}
+          format={fmtBranch}
+          placeholder="Select branch"
+        />
+      </div>
       <div className="fld full">
         <label htmlFor="pnum">Phone number</label>
         <div className="phone">

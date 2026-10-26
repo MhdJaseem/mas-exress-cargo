@@ -66,6 +66,11 @@ export function AboutSection() {
           <h2 className="big">
             Your Premier Partner for <em>GCC &amp; Global Logistics!</em>
           </h2>
+          <p className="body">
+            MAS Express Cargo specializes in secure, reliable, and timely transportation across the GCC and worldwide.
+            With cutting-edge MAS Express Cargo Tracking System, dedicated account management, and deep regional
+            expertise, we deliver peace of mind from pickup to final delivery.
+          </p>
           <div className="feat">
             <div>
               <span className="ic">
@@ -86,11 +91,6 @@ export function AboutSection() {
               </span>
             </div>
           </div>
-          <p className="body">
-            MAS Express Cargo specializes in secure, reliable, and timely transportation across the GCC and worldwide.
-            With cutting-edge MAS Express Cargo Tracking System, dedicated account management, and deep regional
-            expertise, we deliver peace of mind from pickup to final delivery.
-          </p>
           <div className="btn-row" style={{ alignItems: 'center', gap: 24 }}>
             <Link className="btn brand" to="/about">
               More About Us <Icon name="arrow" />

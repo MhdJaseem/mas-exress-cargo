@@ -42,6 +42,8 @@ export async function trackShipment(no: string): Promise<TrackingResult> {
 }
 
 export interface PickupRequest {
+  /** Branch that should handle the pickup (name from data/company.ts branches) */
+  b: string;
   /** Country code option text, e.g. "🇦🇪 UAE (+971)" */
   cc: string;
   /** Phone number */
@@ -60,7 +62,9 @@ export interface PickupRequest {
  */
 export function submitPickup(f: PickupRequest): string {
   const body =
-    'Pickup request%0D%0A%0D%0APhone: ' +
+    'Pickup request%0D%0A%0D%0ABranch: ' +
+    encodeURIComponent(f.b) +
+    '%0D%0APhone: ' +
     encodeURIComponent(f.cc + ' ' + f.n) +
     '%0D%0AShipment Mode: ' +
     encodeURIComponent(f.m) +

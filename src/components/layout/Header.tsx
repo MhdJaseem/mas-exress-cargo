@@ -226,8 +226,10 @@ export function Header() {
         <HashLink hash="hero-track" className="btn">
           Track Shipment
         </HashLink>
-        <HashLink hash="pickup" className="btn brand btn-sq" aria-label="Request Pickup" title="Request Pickup">
+        {/* labelled on wide screens, icon-only below 1280px (label stays for screen readers) */}
+        <HashLink hash="pickup" className="btn brand act-pickup" title="Request Pickup">
           <Icon name="plus" />
+          <span className="lbl">Request Pickup</span>
         </HashLink>
       </div>
       <button

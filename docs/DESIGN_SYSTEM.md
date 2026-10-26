@@ -53,3 +53,12 @@ Home: 1180, 1100, 960, 900 (stack mode on/off at 900), 620. Inner pages: 980 (si
 ## Photography
 
 Real photos only (no illustrations): air (hero-air), sea (hero-sea), road (hero-road), warehouse aisle (card-warehouse), container-at-port (about-poster, used for Customs). (`sections/why-cargo.jpg`, plane over ship, is no longer used since Why Choose Us dropped its photo.) Overlay gradients keep white text legible. Service page headers use the live site's own page photos (`img/pages/<page>.webp`).
+
+## Hierarchy rules (2026-10-26)
+
+Tokens live in the "HIERARCHY PASS" block at the end of `src/styles/main.css`.
+
+- **Type scale:** `--fs-xs` 12.5 (eyebrows, labels) · `--fs-sm` 14.5 (card text) · `--fs-body` 16 (paragraphs) · `--fs-lead` 16–18 (section intros) · `--fs-h3` 17–19 semibold (card titles) · `--fs-h2` 28–46 weight 400 uppercase (section headings). Don't add sizes between these.
+- **Spacing:** 8px rhythm, `--sp-1` 8 … `--sp-8` 64. Service-page sections are `--sp-8` apart; heading block → content is `--sp-4`.
+- **CTA tiers:** _primary_ `.btn.brand` (solid red), one per view: Request Pickup in the hero, Enquire now in the service sidebar, Submit in the pickup card. _Secondary_ `.btn` (ink), `.btn.light` (white) or `.btn.ghost` (outline on photos). _Tertiary_ `.more` (text + arrow). Buttons are `--btn-h` 48px (52px in the hero and header).
+- Selected/active list items use the red **tint**, not solid red, so they don't compete with the primary action.

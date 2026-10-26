@@ -354,3 +354,19 @@ a.fc{display:block}
 .dopt-more:focus-visible{outline:none}
 .dopt:has(.dopt-more:focus-visible){outline:3px solid var(--brand);outline-offset:3px}
 .dopt:hover .dopt-more .i{transform:translate(3px,-3px)}
+
+/* ======================================================================
+   HIERARCHY PASS (2026-10-26) — service, solution and company pages (tokens in main.css)
+   ====================================================================== */
+.main-col{gap:var(--sp-8)}
+.blk-h{margin-bottom:var(--sp-4)}
+.lead2{font-size:var(--fs-lead);line-height:1.6;max-width:62ch;margin-top:var(--sp-2)}
+.para{font-size:var(--fs-body);line-height:1.7;max-width:68ch}
+.para+.para{margin-top:var(--sp-2)}
+.fc h3,.dopt h3{font-size:var(--fs-h3);font-weight:600}
+.fc p,.dopt p,.trkp p{font-size:var(--fs-sm);line-height:1.55}
+/* sidebar: one red action (Enquire now). The current service is a tint, not a second solid-red block. */
+.allsv a:hover,.allsv a.cur{background:var(--brand-tint);color:var(--brand-text)}
+.allsv a:hover .i,.allsv a.cur .i{color:var(--brand)}
+.allsv a.cur{font-weight:600;box-shadow:inset 3px 0 0 var(--brand)}
+.callc a.num{font-size:26px;font-weight:400}

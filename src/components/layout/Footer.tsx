@@ -83,7 +83,11 @@ export function Footer() {
                 <span className="fic">
                   <Icon name="mail" />
                 </span>
-                <a href={`mailto:${CONTACT.emails[0]}`}>{CONTACT.emails[0]}</a>
+                {/* allow the long address to wrap at the @, not mid-word */}
+                <a href={`mailto:${CONTACT.emails[0]}`}>
+                  {CONTACT.emails[0].split('@')[0]}
+                  <wbr />@{CONTACT.emails[0].split('@')[1]}
+                </a>
               </li>
               <li style={{ color: '#d6d8db', fontSize: 14, lineHeight: 1.5 }}>
                 <span className="fic">
