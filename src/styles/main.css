@@ -294,6 +294,9 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .dp-day.on,.dp-day.on:hover{background:var(--brand);color:#fff}
 .dp-day:disabled{color:rgba(21,21,21,.25);cursor:default}
 .dp-day:focus-visible{outline:2px solid var(--ink);outline-offset:1px}
+/* not enough room below the field: open upward instead (set by opensUp() in Select.tsx) */
+.sel.up .sel-list{top:auto;bottom:calc(100% + 6px);animation-name:selUp}
+@keyframes selUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
 @keyframes selIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.sel-list{animation:none}}
 .phone{display:grid;grid-template-columns:140px 1fr;gap:8px}
@@ -719,16 +722,18 @@ html.stackmode section#why{margin-top:0;padding-top:96px;padding-bottom:36px}
    and the home hero fills exactly one screen at every size: window height minus the
    frame + shell padding/border above and below it (--fit-gap). min-height, not height,
    so content can still grow on very short screens instead of being clipped. */
-:root{--fit-gap:34px}
+:root{--fit-gap:17px}
 .frame{max-width:none}
-/* full width: no side gap between the window edge and the page content (top/bottom spacing stays, so --fit-gap is unchanged) */
-.frame{padding-left:0;padding-right:0}
-.shell{padding-left:0;padding-right:0;border-left:0;border-right:0;border-radius:0}
+/* full width: no gap at the sides or the bottom — the page ends with the footer flush to the window edge.
+   Only the top frame + shell padding/border remain, so --fit-gap is half its old value. */
+.frame{padding-left:0;padding-right:0;padding-bottom:0}
+.shell{padding-left:0;padding-right:0;padding-bottom:0;border-left:0;border-right:0;border-bottom:0;border-radius:0}
+footer{border-bottom-left-radius:0;border-bottom-right-radius:0}
 html,body{overflow-x:clip} /* off-screen reveal animations must never cause sideways scroll */
 html body .hero,html.stackmode .hero.stack{min-height:calc(100vh - var(--fit-gap));min-height:calc(100svh - var(--fit-gap))}
 .hero-copy .big{font-size:clamp(26px,min(4.7vw,8vh),62px)} /* shrink on short, wide windows */
 @media (max-width:620px){
-  :root{--fit-gap:26px}
+  :root{--fit-gap:13px}
 }
 /* large screens: scale hero content with the (now much bigger) hero so it doesn't look lost */
 @media (min-width:1800px) and (min-height:980px){.hero-copy,.hero .slidenav,.hero .bento{zoom:1.2}}

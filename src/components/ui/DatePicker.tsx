@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from './Icon';
+import { opensUp } from './Select';
 
 const pad = (n: number) => String(n).padStart(2, '0');
 /** Local-time yyyy-mm-dd (toISOString would shift to UTC). */
@@ -39,6 +40,7 @@ interface Props {
 export function DatePicker({ id, value, onChange, placeholder = 'Select date' }: Props) {
   const [open, setOpen] = useState(false);
   const [focus, setFocus] = useState(startOfToday);
+  const [up, setUp] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const grid = useRef<HTMLDivElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
@@ -66,6 +68,7 @@ export function DatePicker({ id, value, onChange, placeholder = 'Select date' }:
   function show() {
     const v = value ? parse(value) : today;
     setFocus(v < today ? today : v);
+    setUp(opensUp(root.current, 350)); // calendar is ~340px tall
     setOpen(true);
   }
 
@@ -104,7 +107,7 @@ export function DatePicker({ id, value, onChange, placeholder = 'Select date' }:
 
   return (
     <div
-      className={`sel dp${open ? ' open' : ''}`}
+      className={`sel dp${open ? ' open' : ''}${up ? ' up' : ''}`}
       ref={root}
       onKeyDown={(e) => {
         if (e.key === 'Escape' && open) {

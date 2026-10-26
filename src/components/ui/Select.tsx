@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState, type KeyboardEvent } from 'react';
 import { Icon } from './Icon';
 
+/** True when a popup of height `need` px won't fit below `el` but there is more room above it. */
+export function opensUp(el: HTMLElement | null, need: number) {
+  if (!el) return false;
+  const r = el.getBoundingClientRect();
+  const below = window.innerHeight - r.bottom;
+  return below < need && r.top > below;
+}
+
 interface Props {
   id: string;
   value: string;
@@ -32,6 +40,7 @@ export function Select({
 }: Props) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
+  const [up, setUp] = useState(false);
   const root = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLUListElement>(null);
   const btn = useRef<HTMLButtonElement>(null);
@@ -52,11 +61,18 @@ export function Select({
 
   // keep the highlighted option in view
   useEffect(() => {
-    if (open) list.current?.children[active]?.scrollIntoView({ block: 'nearest' });
+    // (scroll only the list — scrollIntoView would also scroll the page)
+    const ul = list.current;
+    const li = ul?.children[active] as HTMLElement | undefined;
+    if (!open || !ul || !li) return;
+    if (li.offsetTop < ul.scrollTop) ul.scrollTop = li.offsetTop - 6;
+    else if (li.offsetTop + li.offsetHeight > ul.scrollTop + ul.clientHeight)
+      ul.scrollTop = li.offsetTop + li.offsetHeight - ul.clientHeight + 6;
   }, [open, active]);
 
   function show() {
     setActive(Math.max(0, options.indexOf(value || startAt || '')));
+    setUp(opensUp(root.current, Math.min(280, options.length * 40 + 20)));
     setOpen(true);
   }
 
@@ -93,7 +109,7 @@ export function Select({
   }
 
   return (
-    <div className={`sel${open ? ' open' : ''}`} ref={root}>
+    <div className={`sel${open ? ' open' : ''}${up ? ' up' : ''}`} ref={root}>
       <button
         ref={btn}
         id={id}
