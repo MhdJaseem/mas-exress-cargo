@@ -82,7 +82,9 @@ details summary::-webkit-details-marker{display:none}
 details .pl{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--brand);color:#fff;flex:none;transition:transform .3s}
 details[open] .pl{transform:rotate(45deg)}
 details p{padding:0 0 16px;color:var(--muted)}
-aside.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:84px;align-self:start}
+/* z-index: sticky makes the sidebar its own stacking context; without it the footer (later in the DOM,
+   position:relative) paints over the pickup form's dropdowns / calendar when they open near the page end */
+aside.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:84px;align-self:start;z-index:5}
 /* sidebar "Enquire now" (WhatsApp) — full-width button at the top of the sidebar */
 aside.side .enq{width:100%;justify-content:center}
 .allsv{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
@@ -100,7 +102,7 @@ aside .phone{grid-template-columns:118px 1fr}
 .cta-band .btn{background:var(--ink)}
 .js .inner .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0)*70ms)}
 .js .inner .reveal.in{opacity:1;transform:none}
-@media (max-width:980px){.pbody{grid-template-columns:minmax(0,1fr)}aside.side{position:static}.stats4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:980px){.pbody{grid-template-columns:minmax(0,1fr)}aside.side{position:relative}.stats4{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.fgrid3.c3,.fgrid3.c2{grid-template-columns:minmax(0,1fr)}.phero{padding:96px var(--gutter) 28px;min-height:320px}.pbody{padding:24px var(--gutter) 28px}.cta-band{margin:0 var(--gutter) 8px}aside .pf{grid-template-columns:1fr}.psteps{padding:22px 16px 2px}.psteps li{grid-template-columns:38px minmax(0,1fr);gap:14px;padding-bottom:24px}.psteps li:not(:last-child)::before,.psteps li:not(:last-child)::after{left:18px;top:48px;bottom:8px}.psteps .node{width:38px;height:38px;font-size:13px}.psteps .ptxt{padding-top:6px}.psteps h3{font-size:16.5px}.psteps p{font-size:13.5px}.psteps .ghost{display:none}}
 @media (prefers-reduced-motion:reduce){.phero .bg{animation:none}.js .inner .reveal{opacity:1;transform:none;transition:none}}
 
