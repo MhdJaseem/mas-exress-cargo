@@ -8,7 +8,7 @@ Source of truth for wording: the original site https://www.masexpresscargo.com. 
 - Email masexpresscargodubai@gmail.com · sales@masexpress.in
 - Address: MAS Express Cargo. Warehouse number - 08 , Industrial area - 17, Near - Diana Trade , Sharjah UAE.
 - WhatsApp: +971 50 644 4786 (wa.me/971506444786) · +971 52 166 8786 (wa.me/971521668786)
-- Social: facebook / x / instagram: `masexpresscargo`; LinkedIn `company/masexpresscargo`
+- Social (updated 2026-10-27 from the client): Facebook `facebook.com/masexpresscargodubai/directory_travel` · X `x.com/masexpresscargo` · Instagram `instagram.com/masexpresscargodubai/` · LinkedIn `linkedin.com/in/mas-express-cargo-uae-91304b445/` (a personal profile URL, not a company page)
 
 ## Pages
 

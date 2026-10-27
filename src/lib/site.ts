@@ -20,10 +20,10 @@ export const WHATSAPP = [
 ] as const;
 
 export const SOCIALS = [
-  { href: 'https://www.facebook.com/masexpresscargo', label: 'Facebook', icon: 'fb' },
+  { href: 'https://www.facebook.com/masexpresscargodubai/directory_travel', label: 'Facebook', icon: 'fb' },
   { href: 'https://x.com/masexpresscargo', label: 'X', icon: 'xx' },
-  { href: 'https://www.instagram.com/masexpresscargo', label: 'Instagram', icon: 'ig' },
-  { href: 'https://www.linkedin.com/company/masexpresscargo/', label: 'LinkedIn', icon: 'in' },
+  { href: 'https://www.instagram.com/masexpresscargodubai/', label: 'Instagram', icon: 'ig' },
+  { href: 'https://www.linkedin.com/in/mas-express-cargo-uae-91304b445/', label: 'LinkedIn', icon: 'in' },
 ] as const;
 
 /** WhatsApp "Enquire now" link with a prefilled message for a service. */
