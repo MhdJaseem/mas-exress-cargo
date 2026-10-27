@@ -290,6 +290,12 @@ form.pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .fld{display:flex;flex-direction:column;gap:7px}
 .fld.full{grid-column:1/-1}
 .fld label{font-size:13px;font-weight:500}
+/* "Use my location" next to the pickup Branch label — 44px tap area without making the row taller */
+.lbl-row{display:flex;align-items:center;justify-content:space-between;gap:10px;height:19px}
+.near{display:inline-flex;align-items:center;gap:5px;min-height:44px;margin:-12px -8px;padding:0 8px;border:0;background:none;color:inherit;font:inherit;font-size:13px;font-weight:500;text-decoration:underline;text-underline-offset:3px;cursor:pointer;border-radius:var(--r-sm)}
+.near .i{width:15px;height:15px}
+.near:disabled{opacity:.75;cursor:progress}
+.near:focus-visible{outline:3px solid var(--ink)}
 .fld input,.fld select{height:42px;border-radius:var(--r-sm);border:1px solid transparent;background:#fff;color:var(--ink);padding:0 12px;font-size:14px;width:100%}
 .fld input:focus,.fld select:focus{outline:3px solid var(--ink)}
 /* custom dropdown (components/ui/Select.tsx) — same look as the inputs, styled option list */

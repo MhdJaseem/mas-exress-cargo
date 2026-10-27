@@ -1,9 +1,9 @@
-import { useState, type FormEvent } from 'react';
+import { useEffect, useMemo, useState, type FormEvent } from 'react';
 import { submitPickup } from '../../lib/api';
 import { Icon } from './Icon';
 import { Select } from './Select';
 import { DatePicker } from './DatePicker';
-import { branches } from '../../data/company';
+import { branches, branchGeo } from '../../data/company';
 
 export const SHIPMENT_MODES = ['Air Freight', 'Sea Freight', 'Land Transport'] as const;
 export type ShipmentMode = (typeof SHIPMENT_MODES)[number];
@@ -38,6 +38,19 @@ const REGION = new Map(branches.map((b) => [b.name, b.region.replace(/, UAE$/, '
 const fmtBranch = (v: string) => `${v}, ${REGION.get(v)}`;
 const BRANCH_WA = new Map(branches.map((b) => [b.name, b.whatsapp ?? '']));
 
+type LatLng = [number, number];
+const HAS_GEO = typeof navigator !== 'undefined' && 'geolocation' in navigator;
+
+/** Straight-line (haversine) distance in km. */
+function kmBetween([lat1, lng1]: LatLng, [lat2, lng2]: LatLng) {
+  const rad = Math.PI / 180;
+  const a =
+    Math.sin(((lat2 - lat1) * rad) / 2) ** 2 +
+    Math.cos(lat1 * rad) * Math.cos(lat2 * rad) * Math.sin(((lng2 - lng1) * rad) / 2) ** 2;
+  return 12742 * Math.asin(Math.sqrt(a));
+}
+const fmtKm = (km: number) => (km < 10 ? km.toFixed(1) : Math.round(km).toLocaleString('en')) + ' km';
+
 /** Pickup time slots every 30 minutes, stored as hh:mm (24h) and shown as e.g. "9:30 AM". */
 const TIME_SLOTS = Array.from(
   { length: 48 },
@@ -58,6 +71,67 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
   const [d, setD] = useState('');
   const [t, setT] = useState('');
   const [msg, setMsg] = useState('');
+  const [pos, setPos] = useState<LatLng | null>(null);
+  const [locating, setLocating] = useState(false);
+
+  // Distance to each branch once the visitor shares their location; the list is then sorted nearest first.
+  const dist = useMemo(() => {
+    const m = new Map<string, number>();
+    if (pos) for (const name of BRANCHES) if (branchGeo[name]) m.set(name, kmBetween(pos, branchGeo[name]));
+    return m;
+  }, [pos]);
+  const options = useMemo(
+    () => (pos ? [...BRANCHES].sort((x, y) => (dist.get(x) ?? Infinity) - (dist.get(y) ?? Infinity)) : BRANCHES),
+    [pos, dist],
+  );
+  const fmtOption = (v: string) => (dist.has(v) ? `${fmtBranch(v)} · ${fmtKm(dist.get(v)!)}` : fmtBranch(v));
+
+  function located(p: GeolocationPosition, pickNearest: boolean) {
+    const here: LatLng = [p.coords.latitude, p.coords.longitude];
+    setPos(here);
+    setLocating(false);
+    if (!pickNearest) return;
+    let best = '';
+    for (const name of BRANCHES)
+      if (branchGeo[name] && (!best || kmBetween(here, branchGeo[name]) < kmBetween(here, branchGeo[best])))
+        best = name;
+    setBr((cur) => cur || best);
+  }
+
+  function locate() {
+    setLocating(true);
+    setMsg('');
+    navigator.geolocation.getCurrentPosition(
+      (p) => located(p, true),
+      () => {
+        setLocating(false);
+        setMsg('Could not get your location. Please choose your branch from the list.');
+      },
+      { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },
+    );
+  }
+
+  // If location was already allowed on an earlier visit, sort by distance straight away (no prompt).
+  useEffect(() => {
+    if (!HAS_GEO || !navigator.permissions) return;
+    let live = true;
+    navigator.permissions
+      .query({ name: 'geolocation' })
+      .then((s) => {
+        if (live && s.state === 'granted')
+          navigator.geolocation.getCurrentPosition(
+            (p) => live && located(p, false),
+            () => {},
+            {
+              maximumAge: 300000,
+            },
+          );
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, []);
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -72,13 +146,21 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
   return (
     <form className="pf" id="pickupForm" noValidate onSubmit={submit}>
       <div className="fld full">
-        <label htmlFor="pbranch">Branch</label>
+        <div className="lbl-row">
+          <label htmlFor="pbranch">Branch</label>
+          {HAS_GEO && (
+            <button type="button" className="near" onClick={locate} disabled={locating}>
+              <Icon name="pin" />
+              {locating ? 'Locating…' : pos ? 'Nearest first' : 'Use my location'}
+            </button>
+          )}
+        </div>
         <Select
           id="pbranch"
           value={br}
-          options={BRANCHES}
+          options={options}
           onChange={setBr}
-          format={fmtBranch}
+          format={fmtOption}
           placeholder="Select branch"
         />
       </div>

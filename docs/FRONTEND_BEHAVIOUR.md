@@ -15,7 +15,7 @@
 5. **Why Choose Us** — hovering a list item or pin highlights both (`.hot` / `.on`); the photo gets `.in` when 25% visible.
 6. **About video** — `#aboutVideo` plays when visible, pauses off-screen; muted/loop/playsinline.
 7. **Stats** — `CountUp` counts the number up once when 60% visible (static under reduced motion).
-8. **Pickup form** — Branch (branches from `data/company.ts`, head office excluded), phone, pickup address (`#paddr`), mode, date and time; all required, then `submitPickup()` opens WhatsApp (new tab; same tab if blocked) to the selected branch's `whatsapp` number (`data/company.ts`; falls back to the main support number) with the details prefilled. The customer taps Send.
+8. **Pickup form** — Branch (branches from `data/company.ts`, head office excluded), phone, pickup address (`#paddr`), mode, date and time; all required, then `submitPickup()` opens WhatsApp (new tab; same tab if blocked) to the selected branch's `whatsapp` number (`data/company.ts`; falls back to the main support number) with the details prefilled. The customer taps Send. "Use my location" (`.near`, shown only when the browser has geolocation) asks for the visitor's position, sorts the branch list nearest first with straight-line km (`branchGeo` in `data/company.ts`, approximate area centres) and selects the nearest branch if none is chosen; if location was already allowed earlier the list is sorted on load without a prompt. Needs `geolocation=(self)` in the `Permissions-Policy` header (`vercel.json`).
    **Send a Message form** (Contact Us card) — three steps: name (first name required) → email (format-checked) → subject + message, then `await submitMessage()` (FormSubmit AJAX) and a thank-you screen with a confetti burst.
 
 ## Service and company pages

@@ -172,6 +172,26 @@ export interface Branch {
   whatsapp?: string;
 }
 
+/** Branch location [latitude, longitude], used to sort the pickup branch list by distance.
+    APPROXIMATE: the centre of each area, not the office itself. Replace with the client's Google Maps pins. */
+export const branchGeo: Record<string, [number, number]> = {
+  Deira: [25.2521, 55.3324],
+  'Jebel Ali': [25.0118, 55.0866],
+  'Al Quoz': [25.1336, 55.2282],
+  Karama: [25.2443, 55.3045],
+  'Abu Dhabi': [24.4539, 54.3773],
+  'Sharjah City': [25.3463, 55.4209],
+  Rolla: [25.3573, 55.3886],
+  DIP: [24.9857, 55.1724],
+  Sonapur: [25.2369, 55.4362],
+  Muweilah: [25.3003, 55.4569],
+  Naif: [25.2703, 55.3086],
+  'Bur Dubai': [25.2589, 55.2969],
+  Murar: [25.2768, 55.3138],
+  'Delhi Office': [28.6139, 77.209],
+  'Mumbai Office': [18.9498, 72.8355],
+};
+
 const contact = (text: string, tel: string): BranchRow => ({ label: 'Contact', text, href: `tel:${tel}` });
 const hours = (text: string): BranchRow => ({ label: 'Hours', text });
 const UAE_HOURS = hours('8 AM–8 PM');
@@ -217,13 +237,13 @@ export const branches: Branch[] = [
     region: 'Dubai, UAE',
     address: 'Karama, Dubai',
     rows: [contact('050 786 3335', '0507863335'), UAE_HOURS],
-    whatsapp: '971507863335',
+    whatsapp: '971521294786',
   },
   {
     name: 'Abu Dhabi',
     region: 'Abu Dhabi, UAE',
     rows: [contact('054 786 1414', '0547861414'), UAE_HOURS],
-    whatsapp: '971547861414',
+    whatsapp: '971581030786',
   },
   {
     name: 'Sharjah City',
@@ -235,7 +255,7 @@ export const branches: Branch[] = [
     name: 'Rolla',
     region: 'Sharjah, UAE',
     rows: [contact('052 129 4786', '0521294786'), UAE_HOURS],
-    whatsapp: '971521294786',
+    whatsapp: '971581412786',
   },
   {
     name: 'DIP',
@@ -248,6 +268,31 @@ export const branches: Branch[] = [
     region: 'Dubai, UAE',
     rows: [contact('058 103 0786', '0581030786'), UAE_HOURS],
     whatsapp: '971581030786',
+  },
+  // Not on the live site: added 2026-10-27 from the client's staff phone list (branch contact person's number).
+  {
+    name: 'Muweilah',
+    region: 'Sharjah, UAE',
+    rows: [contact('058 187 6786', '0581876786'), UAE_HOURS],
+    whatsapp: '971581876786',
+  },
+  {
+    name: 'Naif',
+    region: 'Dubai, UAE',
+    rows: [contact('058 105 7867', '0581057867'), UAE_HOURS],
+    whatsapp: '971581057867',
+  },
+  {
+    name: 'Bur Dubai',
+    region: 'Dubai, UAE',
+    rows: [contact('058 207 5786', '0582075786'), UAE_HOURS],
+    whatsapp: '971582075786',
+  },
+  {
+    name: 'Murar',
+    region: 'Dubai, UAE',
+    rows: [contact('050 786 3335', '0507863335'), UAE_HOURS],
+    whatsapp: '971507863335',
   },
   {
     name: 'Delhi Office',
