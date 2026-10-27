@@ -236,7 +236,7 @@ export const branches: Branch[] = [
     region: 'Dubai, UAE',
     address: 'Karama, Dubai',
     rows: [contact('050 786 3335', '0507863335'), UAE_HOURS],
-    whatsapp: '971521294786',
+    whatsapp: '971581864786',
   },
   {
     name: 'Abu Dhabi',
