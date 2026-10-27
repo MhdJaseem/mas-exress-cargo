@@ -74,7 +74,8 @@ export function submitPickup(f: PickupRequest): string {
     'Hello MAS Express Cargo, I would like to request a pickup.',
     '',
     'Branch: ' + f.b,
-    'Phone: ' + f.cc + ' ' + f.n,
+    // Flag emoji dropped: WhatsApp shows it as letters or a broken symbol on some devices.
+    'Phone: ' + f.cc.replace(/\p{Regional_Indicator}/gu, '').trim() + ' ' + f.n,
     'Pickup Address: ' + f.a,
     'Shipment Mode: ' + f.m,
     'Pickup Date: ' + f.d,
