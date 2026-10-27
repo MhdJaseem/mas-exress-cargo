@@ -175,19 +175,18 @@ export interface Branch {
 /** Branch location [latitude, longitude], used to sort the pickup branch list by distance.
     APPROXIMATE: the centre of each area, not the office itself. Replace with the client's Google Maps pins. */
 export const branchGeo: Record<string, [number, number]> = {
-  Deira: [25.2521, 55.3324],
-  'Jebel Ali': [25.0118, 55.0866],
-  'Al Quoz': [25.1336, 55.2282],
-  Karama: [25.2443, 55.3045],
-  'Abu Dhabi': [24.4539, 54.3773],
+  'Jebel Ali': [24.978565016286524, 55.13733608704099],
+  'Al Quoz': [25.133229352614645, 55.252777088955554],
+  Karama: [25.251904910100844, 55.307659769943974],
+  'Abu Dhabi': [24.328764852192926, 54.53191706807053],
   'Sharjah City': [25.3463, 55.4209],
   Rolla: [25.3573, 55.3886],
-  DIP: [24.9857, 55.1724],
-  Sonapur: [25.2369, 55.4362],
+  DIP: [24.976295862546436, 55.20166669692031],
+  // Sonapur: [25.2369, 55.4362],
   Muweilah: [25.3003, 55.4569],
   Naif: [25.2703, 55.3086],
-  'Bur Dubai': [25.2589, 55.2969],
-  Murar: [25.2768, 55.3138],
+  'Bur Dubai': [25.260908479448677, 55.29806315859964],
+  Murar: [25.27812790652442, 55.31277876681345],
   'Delhi Office': [28.6139, 77.209],
   'Mumbai Office': [18.9498, 72.8355],
 };

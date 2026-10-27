@@ -6,7 +6,7 @@ import { PickupForm } from '../components/ui/PickupForm';
 import { ServiceBlock } from '../components/service/ServiceBlocks';
 import { DeliveryOptions } from '../components/service/DeliveryOptions';
 import { services, type Service } from '../data/services';
-import { CONTACT, enquireHref, pageTitle } from '../lib/site';
+import { enquireHref, pageTitle } from '../lib/site';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useReveal } from '../hooks/useReveal';
 
@@ -47,15 +47,9 @@ export default function ServicePage({ service: s }: { service: Service }) {
         </div>
 
         <aside className="side">
-          <div className="callc">
-            <small>Call Us Anytime</small>
-            <a className="num" href={CONTACT.tollFree.href}>
-              {CONTACT.tollFree.label}
-            </a>
-            <a className="btn brand" href={enquire} target="_blank" rel="noopener">
-              Enquire now <Icon name="arrow" />
-            </a>
-          </div>
+          <a className="btn brand enq" href={enquire} target="_blank" rel="noopener">
+            Enquire now <Icon name="arrow" />
+          </a>
           <div className="allsv">
             <h4>All Services</h4>
             {services.map((o) => (

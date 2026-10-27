@@ -1,4 +1,7 @@
-.phero{position:relative;border-radius:var(--r-lg);overflow:hidden;isolation:isolate;color:#fff;padding:118px 26px 44px;min-height:380px;display:flex;flex-direction:column;justify-content:flex-end;background:#0a2f4d}
+/* side gap shared by the hero text, page body and CTA band so all line up: 16px on phones, ~5vw on laptops,
+   and on wide screens whatever centres a 1360px content area (100% = the parent's width where it's used) */
+main.inner{--gutter:max(clamp(16px,5vw,120px),calc((100% - 1360px) / 2))}
+.phero{position:relative;border-radius:var(--r-lg);overflow:hidden;isolation:isolate;color:#fff;padding:118px var(--gutter) 44px;min-height:380px;display:flex;flex-direction:column;justify-content:flex-end;background:#0a2f4d}
 .phero .bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;transform:scale(1.04);animation:pzoom 14s ease-out forwards}
 @keyframes pzoom{to{transform:scale(1)}}
 .phero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(3,14,26,.62),rgba(3,14,26,.22) 40%,rgba(3,12,22,.86))}
@@ -8,7 +11,9 @@
 .phero h1{font-weight:600;text-transform:uppercase;color:#fff;font-size:clamp(26px,4vw,52px);line-height:1.05;max-width:760px}
 .phero h1 em{font-style:normal;background:var(--brand);padding:0 .14em;border-radius:.12em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
 .phero p{margin:14px 0 22px;max-width:560px;font-size:15px;color:#e8eef2}
-.pbody{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:26px;padding:34px 20px 40px;max-width:1220px;margin:0 auto}
+/* full width with the same side gap as .phero, so the content lines up with the hero text */
+.pbody{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:26px;padding:34px var(--gutter) 40px}
+@media (min-width:1440px){.pbody{grid-template-columns:minmax(0,1fr) 380px;gap:clamp(40px,4vw,80px)}}
 .main-col{min-width:0;display:flex;flex-direction:column;gap:40px}
 .blk-h{margin-bottom:20px}
 .lead2{color:var(--muted);font-size:14.5px;max-width:560px;margin-top:10px}
@@ -78,9 +83,8 @@ details .pl{display:grid;place-items:center;width:28px;height:28px;border-radius
 details[open] .pl{transform:rotate(45deg)}
 details p{padding:0 0 16px;color:var(--muted)}
 aside.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:84px;align-self:start}
-.callc{background:var(--ink);color:#fff;border-radius:var(--r-lg);padding:22px}
-.callc small{display:block;color:#b9bcc0;font-size:12.5px;margin-bottom:6px}
-.callc a.num{display:block;font-size:24px;font-weight:300;margin-bottom:14px}
+/* sidebar "Enquire now" (WhatsApp) — full-width button at the top of the sidebar */
+aside.side .enq{width:100%;justify-content:center}
 .allsv{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px}
 .allsv h4,.trkp h4{font-size:13px;letter-spacing:.1em;text-transform:uppercase;font-weight:500;margin-bottom:10px}
 .allsv a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--r-sm);font-size:14px;transition:background .2s,color .2s}
@@ -91,13 +95,13 @@ aside.side{display:flex;flex-direction:column;gap:14px;position:sticky;top:84px;
 aside .pickup{padding:20px}
 aside .pf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 aside .phone{grid-template-columns:118px 1fr}
-.cta-band{margin:0 20px 8px;border-radius:var(--r-lg);background:var(--brand);color:#fff;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+.cta-band{margin:0 var(--gutter) 8px;border-radius:var(--r-lg);background:var(--brand);color:#fff;padding:26px;display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
 .cta-band h2{font-size:clamp(20px,2.2vw,28px);text-transform:uppercase;color:#fff}
 .cta-band .btn{background:var(--ink)}
 .js .inner .reveal{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease);transition-delay:calc(var(--i,0)*70ms)}
 .js .inner .reveal.in{opacity:1;transform:none}
 @media (max-width:980px){.pbody{grid-template-columns:minmax(0,1fr)}aside.side{position:static}.stats4{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:640px){.fgrid3.c3,.fgrid3.c2{grid-template-columns:minmax(0,1fr)}.phero{padding:96px 16px 28px;min-height:320px}.pbody{padding:24px 12px 28px}.cta-band{margin:0 12px 8px}aside .pf{grid-template-columns:1fr}.psteps{padding:22px 16px 2px}.psteps li{grid-template-columns:38px minmax(0,1fr);gap:14px;padding-bottom:24px}.psteps li:not(:last-child)::before,.psteps li:not(:last-child)::after{left:18px;top:48px;bottom:8px}.psteps .node{width:38px;height:38px;font-size:13px}.psteps .ptxt{padding-top:6px}.psteps h3{font-size:16.5px}.psteps p{font-size:13.5px}.psteps .ghost{display:none}}
+@media (max-width:640px){.fgrid3.c3,.fgrid3.c2{grid-template-columns:minmax(0,1fr)}.phero{padding:96px var(--gutter) 28px;min-height:320px}.pbody{padding:24px var(--gutter) 28px}.cta-band{margin:0 var(--gutter) 8px}aside .pf{grid-template-columns:1fr}.psteps{padding:22px 16px 2px}.psteps li{grid-template-columns:38px minmax(0,1fr);gap:14px;padding-bottom:24px}.psteps li:not(:last-child)::before,.psteps li:not(:last-child)::after{left:18px;top:48px;bottom:8px}.psteps .node{width:38px;height:38px;font-size:13px}.psteps .ptxt{padding-top:6px}.psteps h3{font-size:16.5px}.psteps p{font-size:13.5px}.psteps .ghost{display:none}}
 @media (prefers-reduced-motion:reduce){.phero .bg{animation:none}.js .inner .reveal{opacity:1;transform:none;transition:none}}
 
 /* consecutive paragraphs in a block; bullet lists inside feature cards (sea freight FCL/LCL/Specialized) */
@@ -369,4 +373,3 @@ a.fc{display:block}
 .allsv a:hover,.allsv a.cur{background:var(--brand-tint);color:var(--brand-text)}
 .allsv a:hover .i,.allsv a.cur .i{color:var(--brand)}
 .allsv a.cur{font-weight:600;box-shadow:inset 3px 0 0 var(--brand)}
-.callc a.num{font-size:26px;font-weight:400}

@@ -6,7 +6,7 @@ import { SectionHead } from '../components/ui/Heading';
 import { PickupForm } from '../components/ui/PickupForm';
 import { solutionPath, solutions, type Solution } from '../data/solutions';
 import { serviceBySlug } from '../data/services';
-import { CONTACT, enquireHref, pageTitle } from '../lib/site';
+import { enquireHref, pageTitle } from '../lib/site';
 import { useDocumentMeta } from '../hooks/useDocumentMeta';
 import { useReveal } from '../hooks/useReveal';
 
@@ -63,15 +63,9 @@ export default function SolutionPage({ solution: s }: { solution: Solution }) {
         </div>
 
         <aside className="side">
-          <div className="callc">
-            <small>Call Us Anytime</small>
-            <a className="num" href={CONTACT.tollFree.href}>
-              {CONTACT.tollFree.label}
-            </a>
-            <a className="btn brand" href={enquire} target="_blank" rel="noopener">
-              Enquire now <Icon name="arrow" />
-            </a>
-          </div>
+          <a className="btn brand enq" href={enquire} target="_blank" rel="noopener">
+            Enquire now <Icon name="arrow" />
+          </a>
           <div className="allsv">
             <h4>All Solutions</h4>
             {solutions.map((o) => (

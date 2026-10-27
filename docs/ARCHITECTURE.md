@@ -52,7 +52,7 @@ vercel.json           SPA rewrite + legacy redirects for Vercel
 ## Page anatomy
 
 **Home** — direct children of `<main>`, all with class `stack`: `#home` hero (slides + Track / Call / Pickup cards) · `#tracking` result panel (hidden until a search) · `#about` (video + stats) · `#services` (4 cards + chips) · `#why` (photo with pins) · `#testimonials` (marquee) · `#pickup` (form + `#contact`).
-**Service pages** — `PageHero` (`.phero`: photo, breadcrumb, H1, lead, buttons) → `.pbody` grid: `.main-col` of blocks from `data/services.ts` + `aside.side` (Call, All Services, Tracking, Request Pickup with the page's mode preselected).
+**Service pages** — `PageHero` (`.phero`: photo, breadcrumb, H1, lead, buttons) → `.pbody` grid: `.main-col` of blocks from `data/services.ts` + `aside.side` (Enquire now button, All Services, Tracking, Request Pickup with the page's mode preselected).
 **Solution pages** — same layout as service pages: `PageHero` → `.pbody` with the live paragraphs, "Related Services" link cards, and a sidebar with "All Solutions".
 **Company pages** — `PageHero` → `.pbody.solo` (full width, no sidebar).
 
