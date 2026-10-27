@@ -36,6 +36,7 @@ const COUNTRY_CODES = [
 const BRANCHES = branches.filter((b) => !b.main).map((b) => b.name);
 const REGION = new Map(branches.map((b) => [b.name, b.region.replace(/, UAE$/, '')]));
 const fmtBranch = (v: string) => `${v}, ${REGION.get(v)}`;
+const BRANCH_WA = new Map(branches.map((b) => [b.name, b.whatsapp ?? '']));
 
 /** Pickup time slots every 30 minutes, stored as hh:mm (24h) and shown as e.g. "9:30 AM". */
 const TIME_SLOTS = Array.from(
@@ -52,6 +53,7 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
   const [br, setBr] = useState('');
   const [cc, setCc] = useState(COUNTRY_CODES[0]);
   const [n, setN] = useState('');
+  const [a, setA] = useState('');
   const [m, setM] = useState<string>(defaultMode);
   const [d, setD] = useState('');
   const [t, setT] = useState('');
@@ -59,8 +61,8 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
 
   function submit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const f = { b: fmtBranch(br), cc, n: n.trim(), m, d, t };
-    if (!br || !f.n || !f.m || !f.d || !f.t) {
+    const f = { b: fmtBranch(br), wa: BRANCH_WA.get(br) ?? '', cc, n: n.trim(), a: a.trim(), m, d, t };
+    if (!br || !f.n || !f.a || !f.m || !f.d || !f.t) {
       setMsg('Please fill in all fields so we can confirm your pickup.');
       return;
     }
@@ -95,6 +97,18 @@ export function PickupForm({ defaultMode = '' }: { defaultMode?: ShipmentMode | 
             onChange={(e) => setN(e.target.value)}
           />
         </div>
+      </div>
+      <div className="fld full">
+        <label htmlFor="paddr">Pickup Address</label>
+        <input
+          id="paddr"
+          type="text"
+          autoComplete="street-address"
+          placeholder="Building, street, area, city"
+          required
+          value={a}
+          onChange={(e) => setA(e.target.value)}
+        />
       </div>
       <div className="fld full">
         <label htmlFor="pmode">Shipment Mode</label>

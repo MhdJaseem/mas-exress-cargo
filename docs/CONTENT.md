@@ -57,7 +57,9 @@ On 2026-10-21 the five service pages were updated to the **exact wording** of th
 
 ## Request Pickup form fields
 
-Phone (country code select + number) · Shipment Mode (Air Freight / Sea Freight / Land Transport) · Pickup Date · Pickup Time.
+Phone (country code select + number) · Pickup Address (added 2026-10-27 at the client's request, label/placeholder ours) · Shipment Mode (Air Freight / Sea Freight / Land Transport) · Pickup Date · Pickup Time.
+
+Submit opens WhatsApp to the selected branch (2026-10-27). Each branch's `whatsapp` number in `src/data/company.ts` is a **placeholder copied from its contact number**: the client must confirm which number is on WhatsApp for every branch. Confirmed so far: Deira +971 58 192 1786 (2026-10-27). The prefilled message opening ("Hello MAS Express Cargo, I would like to request a pickup.") is our wording.
 
 ## New copy (not from the live site)
 

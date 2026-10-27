@@ -167,6 +167,9 @@ export interface Branch {
   address?: string;
   rows: BranchRow[];
   main?: boolean;
+  /** WhatsApp number that receives pickup requests for this branch: digits with country code, as used by wa.me.
+      PLACEHOLDER: copied from the branch contact number until the client confirms each branch's WhatsApp. */
+  whatsapp?: string;
 }
 
 const contact = (text: string, tel: string): BranchRow => ({ label: 'Contact', text, href: `tel:${tel}` });
@@ -193,40 +196,71 @@ export const branches: Branch[] = [
     region: 'Dubai, UAE',
     address: 'Deira, Dubai (Near Deira City Center)',
     rows: [contact('058 212 6786', '0582126786'), UAE_HOURS],
+    whatsapp: '971581921786',
   },
   {
     name: 'Jebel Ali',
     region: 'Dubai, UAE',
     address: 'Jebel Ali Free Zone, Dubai',
     rows: [contact('058 187 6786', '0581876786'), UAE_HOURS],
+    whatsapp: '971581876786',
   },
   {
     name: 'Al Quoz',
     region: 'Dubai, UAE',
     address: 'Al Quoz Industrial Area, Dubai',
     rows: [contact('058 202 3786', '0582023786'), UAE_HOURS],
+    whatsapp: '971582023786',
   },
   {
     name: 'Karama',
     region: 'Dubai, UAE',
     address: 'Karama, Dubai',
     rows: [contact('050 786 3335', '0507863335'), UAE_HOURS],
+    whatsapp: '971507863335',
   },
-  { name: 'Abu Dhabi', region: 'Abu Dhabi, UAE', rows: [contact('054 786 1414', '0547861414'), UAE_HOURS] },
-  { name: 'Sharjah City', region: 'Sharjah, UAE', rows: [contact('050 644 4786', '0506444786'), UAE_HOURS] },
-  { name: 'Rolla', region: 'Sharjah, UAE', rows: [contact('052 129 4786', '0521294786'), UAE_HOURS] },
-  { name: 'DIP', region: 'Dubai, UAE', rows: [contact('058 154 1786', '0581541786'), UAE_HOURS] },
-  { name: 'Sonapur', region: 'Dubai, UAE', rows: [contact('058 103 0786', '0581030786'), UAE_HOURS] },
+  {
+    name: 'Abu Dhabi',
+    region: 'Abu Dhabi, UAE',
+    rows: [contact('054 786 1414', '0547861414'), UAE_HOURS],
+    whatsapp: '971547861414',
+  },
+  {
+    name: 'Sharjah City',
+    region: 'Sharjah, UAE',
+    rows: [contact('050 644 4786', '0506444786'), UAE_HOURS],
+    whatsapp: '971506444786',
+  },
+  {
+    name: 'Rolla',
+    region: 'Sharjah, UAE',
+    rows: [contact('052 129 4786', '0521294786'), UAE_HOURS],
+    whatsapp: '971521294786',
+  },
+  {
+    name: 'DIP',
+    region: 'Dubai, UAE',
+    rows: [contact('058 154 1786', '0581541786'), UAE_HOURS],
+    whatsapp: '971581541786',
+  },
+  {
+    name: 'Sonapur',
+    region: 'Dubai, UAE',
+    rows: [contact('058 103 0786', '0581030786'), UAE_HOURS],
+    whatsapp: '971581030786',
+  },
   {
     name: 'Delhi Office',
     region: 'India',
     address: 'Delhi, India (Main Office)',
     rows: [contact('+91 99204 44786', '+919920444786'), IST_HOURS],
+    whatsapp: '919920444786',
   },
   {
     name: 'Mumbai Office',
     region: 'India',
     address: 'Mumbai, India (Port Office)',
     rows: [contact('+91 98410 78786', '+919841078786'), IST_HOURS],
+    whatsapp: '919841078786',
   },
 ];

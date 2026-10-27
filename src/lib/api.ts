@@ -44,10 +44,14 @@ export async function trackShipment(no: string): Promise<TrackingResult> {
 export interface PickupRequest {
   /** Branch that should handle the pickup (name from data/company.ts branches) */
   b: string;
+  /** That branch's WhatsApp number in wa.me format (digits with country code); '' falls back to the main support number */
+  wa: string;
   /** Country code option text, e.g. "🇦🇪 UAE (+971)" */
   cc: string;
   /** Phone number */
   n: string;
+  /** Pickup address */
+  a: string;
   /** Shipment mode */
   m: string;
   /** Pickup date, yyyy-mm-dd */
@@ -56,25 +60,32 @@ export interface PickupRequest {
   t: string;
 }
 
+// Main support WhatsApp (src/lib/site.ts), used when a branch has no WhatsApp number.
+const PICKUP_WA_FALLBACK = '971506444786';
+
 /**
  * Submit a pickup request. Returns the message shown under the form.
- * Currently opens an email draft; swap for a POST to your backend / CRM.
+ * No backend yet: opens WhatsApp (app on phones, WhatsApp Web on desktop) to the selected branch's
+ * number with the pickup details prefilled; the customer taps Send. Swap for a POST to your backend
+ * (or the WhatsApp Business API) when one exists.
  */
 export function submitPickup(f: PickupRequest): string {
-  const body =
-    'Pickup request%0D%0A%0D%0ABranch: ' +
-    encodeURIComponent(f.b) +
-    '%0D%0APhone: ' +
-    encodeURIComponent(f.cc + ' ' + f.n) +
-    '%0D%0AShipment Mode: ' +
-    encodeURIComponent(f.m) +
-    '%0D%0APickup Date: ' +
-    f.d +
-    '%0D%0APickup Time: ' +
-    f.t;
-  window.location.href =
-    'mailto:masexpresscargodubai@gmail.com?subject=' + encodeURIComponent('Request Pickup') + '&body=' + body;
-  return 'Opening your email app with the pickup details…';
+  const text = [
+    'Hello MAS Express Cargo, I would like to request a pickup.',
+    '',
+    'Branch: ' + f.b,
+    'Phone: ' + f.cc + ' ' + f.n,
+    'Pickup Address: ' + f.a,
+    'Shipment Mode: ' + f.m,
+    'Pickup Date: ' + f.d,
+    'Pickup Time: ' + f.t,
+  ].join('\n');
+  const href = 'https://wa.me/' + (f.wa || PICKUP_WA_FALLBACK) + '?text=' + encodeURIComponent(text);
+  // New tab so the site stays open on desktop; if a popup blocker stops it, open WhatsApp in this tab.
+  const w = window.open(href, '_blank');
+  if (w) w.opener = null;
+  else window.location.href = href;
+  return 'Opening WhatsApp with your pickup details. Tap Send to send it to the branch.';
 }
 
 export interface ContactMessage {
